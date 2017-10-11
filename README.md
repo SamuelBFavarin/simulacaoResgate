@@ -45,11 +45,11 @@ Quais variáveis você pretende mensurar (pelo menos duas de entrada e de uma sa
   - Número de sobreviventes resgatados  (resgate: somente pessoas vivas caracterizam resgate)
 
 O que seu projeto analisará? Que hipóteses ele busca verificar? 
-+Analisará a taxa de resgate/sobrevivência de pessoas em relação as variáveis e estratégias.
-+Algumas estratégias podem ser melhores em determinados cenários.
++ Analisará a taxa de resgate/sobrevivência de pessoas em relação as variáveis e estratégias.
++ Algumas estratégias podem ser melhores em determinados cenários.
 
 Qual o público-alvo que utilizará seu sistema?
-+Centrais de resgate de naufrágios.
++ Centrais de resgate de naufrágios.
 
 Como você identificará seu modelo real? Será um modelo físico ou digital? 
 + Um modelo digital que irá buscar o máximo de constantes reais em várias localizações críticas no mundo.
