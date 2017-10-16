@@ -5,8 +5,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body style="margin-top: 20px">
-        <div class="col-md-5">
-            <h2> Projeto</h2>
+    <h2> Projeto</h2>
+        <div class="col-md-4">
+            <h3>Entrada</h3>
             <div class="form-group">
                 <label for="time">Tempo estimado de sobrevivência das pessoas em minutos:</label>
                 <input type="number" class="form-control" id="time">
@@ -31,13 +32,18 @@
                 <label for="time3">Tempo deslocamento da unidade:</label>
                 <input type="number" class="form-control" id="time3">
             </div>
-            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation()">Simular</button>
+            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation(),tempo()">Simular</button>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-5">
             <canvas id="Canvas" height="500" width="500" style="border:1px solid #000000;"></canvas>
         </div>
+        <div class="col-md-3">
+            <h3>Saida</h3>
+            <label for="people">Tempo percorrido:</label>
+            <span id="hora">00h</span><span id="minuto">00m</span><span id="segundo">00s</span><br>
+        </div>
         <script src="interface.js"></script>
-
+        <script src="cronometro.js"></script>
     </body>
 </html>
 
