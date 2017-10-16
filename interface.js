@@ -4,13 +4,21 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function drawBackground(){
+    ctx.fillStyle="#61ffee";
+    ctx.fillRect(0,0,500,500);
+}
+
 function drawPeople(x,y){
     ctx.beginPath();
+    ctx.fillStyle="#ffd1d3";
     ctx.arc(x,y,2,0,2*Math.PI);
+    ctx.fill();
     ctx.stroke();
 }
 
 function drawShip(){
+    ctx.fillStyle="#612f23";
     ctx.fillRect(235,40,30,120);
 }
 
@@ -28,9 +36,8 @@ function initPeople(num) {
 }
 
 function update(people) {
-    for(var i =0; i< people.length; i++){
-        drawPeople(people[i].posX,people[i].posY);
-    }
+    drawBackground();
+    for(var i =0; i< people.length; i++) drawPeople(people[i].posX,people[i].posY);
     drawShip();
 }
 
