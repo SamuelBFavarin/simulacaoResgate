@@ -32,9 +32,10 @@
                 <label for="time3">Tempo deslocamento da unidade:</label>
                 <input type="number" class="form-control" id="time3">
             </div>
-            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation(),tempo()">Simular</button>
+            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation(),tempo(5)">Simular</button>
         </div>
         <div class="col-md-5">
+            <img id="imgShip" width="30" height="120" src="assets/ship.png">
             <canvas id="Canvas" height="500" width="500" style="border:1px solid #000000;"></canvas>
         </div>
         <div class="col-md-3">

@@ -1,6 +1,13 @@
 var intervalo;
 
-function tempo() {
+function tempo(speed) {
+
+	if(speed === 1) sp = 1000;
+	if(speed === 2) sp = 100;
+	if(speed === 3) sp = 10;
+	if(speed === 4) sp = 1;
+	if(speed === 5) sp = 0.1;
+
     window.clearInterval(intervalo);
 	var s = 1;
 	var m = 0;
@@ -12,7 +19,7 @@ function tempo() {
 		if (s < 10) document.getElementById("segundo").innerHTML = "0" + s + "s"; else document.getElementById("segundo").innerHTML = s + "s";
 		if (m < 10) document.getElementById("minuto").innerHTML = "0" + m + "m"; else document.getElementById("minuto").innerHTML = m + "m";		
 		s++;
-	},10);
+	},sp);
 }
 
 

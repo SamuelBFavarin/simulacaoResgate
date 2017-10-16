@@ -19,7 +19,9 @@ function drawPeople(x,y){
 
 function drawShip(){
     ctx.fillStyle="#612f23";
-    ctx.fillRect(235,40,30,120);
+    var img = document.getElementById("imgShip");
+    ctx.drawImage(img, 235, 40);
+    //ctx.fillRect(235,40,30,120);
 }
 
 function initPeople(num) {
