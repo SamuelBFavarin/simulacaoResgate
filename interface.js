@@ -28,18 +28,28 @@ function initPeople(num) {
 }
 
 function update(people) {
-    console.log(people);
     for(var i =0; i< people.length; i++){
         drawPeople(people[i].posX,people[i].posY);
     }
     drawShip();
 }
 
+function clearSimulation() {
+    ctx.clearRect(0, 0, 500, 500);
+}
+
+function startSimulation() {
+    clearSimulation();
+    var qtdPeople = document.getElementById("people").value;
+    var people = initPeople(qtdPeople);
+    update(people);
+}
+
 /// main
 var c = document.getElementById("Canvas");
 var ctx = c.getContext("2d");
-var people = initPeople(50);
-update(people);
+
+
 
 
 

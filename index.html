@@ -7,11 +7,37 @@
     <body style="margin-top: 20px">
         <div class="col-md-5">
             <h2> Projeto</h2>
+            <div class="form-group">
+                <label for="time">Tempo estimado de sobrevivência das pessoas em minutos:</label>
+                <input type="number" class="form-control" id="time">
+            </div>
+            <div class="form-group">
+                <label for="time2">Desvio máximo do tempo de sobrevivência:</label>
+                <input type="number" class="form-control" id="time2">
+            </div>
+            <div class="form-group">
+                <label for="people">Quantidade de pessoas:</label>
+                <input type="number" class="form-control" value="value" id="people">
+            </div>
+            <div class="form-group">
+                <label for="ship">Perímetro do navio:</label>
+                <input type="number" class="form-control" id="ship">
+            </div>
+            <div class="form-group">
+                <label for="u">Quantidade unidades:</label>
+                <input type="number" class="form-control" id="u">
+            </div>
+            <div class="form-group">
+                <label for="time3">Tempo deslocamento da unidade:</label>
+                <input type="number" class="form-control" id="time3">
+            </div>
+            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation()">Simular</button>
         </div>
         <div class="col-md-7">
             <canvas id="Canvas" height="500" width="500" style="border:1px solid #000000;"></canvas>
         </div>
         <script src="interface.js"></script>
+
     </body>
 </html>
 
