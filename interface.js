@@ -21,15 +21,14 @@ function drawShip(){
     ctx.fillStyle="#612f23";
     var img = document.getElementById("imgShip");
     ctx.drawImage(img, 235, 40);
-    //ctx.fillRect(235,40,30,120);
 }
 
 function initPeople(num) {
     var people = new Array();
     for(var i=0; i<num; i++){
-        var x = random(215,290);
+        var x = random(215,300);
         var y = random(30,170);
-        while(x >= 230 && x<= 280){
+        while(x >= 230 && x<= 290){
             x = random(215,290);
         }
         people[i] = {posX:x, posY:y};
