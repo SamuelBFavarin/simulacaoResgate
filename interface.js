@@ -14,19 +14,34 @@ function drawShip(){
     ctx.fillRect(235,40,30,120);
 }
 
-function update() {
-    for(var i=0; i<8; i++){
-        x = random(215,290);
-        y = random(30,170);
+function initPeople(num) {
+    var people = new Array();
+    for(var i=0; i<num; i++){
+        var x = random(215,290);
+        var y = random(30,170);
         while(x >= 230 && x<= 280){
             x = random(215,290);
         }
-        drawPeople(x,y);
+        people[i] = {posX:x, posY:y};
+    }
+    return people;
+}
+
+function update(people) {
+    console.log(people);
+    for(var i =0; i< people.length; i++){
+        drawPeople(people[i].posX,people[i].posY);
     }
     drawShip();
 }
 
-///// main
+/// main
 var c = document.getElementById("Canvas");
 var ctx = c.getContext("2d");
-update();
+var people = initPeople(50);
+update(people);
+
+
+
+
+
