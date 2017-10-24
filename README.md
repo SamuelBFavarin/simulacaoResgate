@@ -60,12 +60,12 @@ Como você identificará seu modelo real? Será um modelo físico ou digital?
 
 # Entrega M2 07/11/17
 
-[ ] Código ou link de onde está postado
-[ ] Apresentação Slides
-[ ] Referências para as informações teóricas, ilustras e/ou detalhadas;
-[ ] Identificação das variáveis utilizadas e equacionamentos
-[ ] Demosntração do modelo computacional, identificando também as variáveis de entrada e saída, tal como os agentes envolvidos e o objetivo do projeto
-[ ] Uma comparação indicando as semelhanças e diferenças com o mundo real/teórico/dados obtidos
++ [ ] Código ou link de onde está postado
++ [ ] Apresentação Slides
++ [ ] Referências para as informações teóricas, ilustras e/ou detalhadas;
++ [ ] Identificação das variáveis utilizadas e equacionamentos
++ [ ] Demosntração do modelo computacional, identificando também as variáveis de entrada e saída, tal como os agentes envolvidos e o objetivo do projeto
++ [ ] Uma comparação indicando as semelhanças e diferenças com o mundo real/teórico/dados obtidos
 
 
 
