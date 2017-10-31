@@ -1,0 +1,9 @@
+Coordinated sea rescue system based on unmanned air vehicles and surface vessels:
+http://ieeexplore.ieee.org/document/6003509
+
+Deteção de náufragos com sistemas sonar em UUV’s
+https://comum.rcaap.pt/handle/10400.26/15041
+
+Gestão Operacional de Salvamento Aquático
+https://repositorio-aberto.up.pt/bitstream/10216/79119/2/35188.pdf
+

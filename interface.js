@@ -4,42 +4,75 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
+// Desenhos
+
 function drawBackground(){
-    ctx.fillStyle="#61ffee";
+    ctx.fillStyle="rgb(213, 255, 250)";
     ctx.fillRect(0,0,500,500);
 }
 
-function drawPeople(x,y){
+function drawBoat(boat,index){
     ctx.beginPath();
-    ctx.fillStyle="#ffd1d3";
-    ctx.arc(x,y,2,0,2*Math.PI);
+    ctx.fillStyle="rgb(206, 159, 53)";
+    ctx.arc( boat.posX, boat.posY, 1.5, 0, 2*Math.PI );
     ctx.fill();
-    ctx.stroke();
+    ctx.fillStyle="rgb(0, 0, 0)";
+    ctx.fillText( boat.people, boat.posX-2.5, boat.posY-3 );
 }
 
-function drawShip(){
+function drawShip(width, height){
     ctx.fillStyle="#612f23";
     var img = document.getElementById("imgShip");
-    ctx.drawImage(img, 235, 40);
+    ctx.drawImage(img, (c.width*0.5)-(img.width/2), 20, width*c.width, height*c.height);
 }
 
-function initPeople(num) {
-    var people = new Array();
-    for(var i=0; i<num; i++){
+function drawVehicle(vehicle, index){
+    ctx.fillStyle="#612f23";
+    var img = document.getElementById(vehicle.idImg);
+    ctx.drawImage(img, vehicle.posX * c.width, vehicle.posY * c.height, vehicle.width*c.width, vehicle.height*c.height);
+}
+
+
+// Inicialização 
+
+function initBoats(num, boatLimit) {
+    var boats = new Array();
+    for(var i=0; i < num/boatLimit; i++){
         var x = random(215,300);
         var y = random(30,170);
         while(x >= 230 && x<= 290){
             x = random(215,290);
         }
-        people[i] = {posX:x, posY:y};
+        boats[i] = {}
+        boats[i].people = boatLimit;
+        boats[i].posX = x;
+        boats[i].posY = y;
     }
-    return people;
+    return boats;
 }
 
-function update(people) {
+function initVehicle(num, idImg, speed, width, height){
+    var vehicles = new Array();
+    for(var i=0; i<num; i++){
+        vehicles[i] = {};
+        vehicles[i].posX = 0.5;
+        vehicles[i].posY = 0.9;
+        vehicles[i].width  = width;
+        vehicles[i].height = height;
+        vehicles[i].idImg = idImg;
+        vehicles[i].speed = speed; 
+    }
+    return vehicles;
+}
+
+// updates
+
+function update(boats,vehicles) {
     drawBackground();
-    for(var i =0; i< people.length; i++) drawPeople(people[i].posX,people[i].posY);
-    drawShip();
+    drawShip( .08, .24 );
+    boats.forEach(drawBoat);
+    vehicles.forEach(drawVehicle);
 }
 
 function clearSimulation() {
@@ -49,8 +82,11 @@ function clearSimulation() {
 function startSimulation() {
     clearSimulation();
     var qtdPeople = document.getElementById("people").value;
-    var people = initPeople(qtdPeople);
-    update(people);
+    var boats = initBoats( qtdPeople, 50 );
+    var helicopters = initVehicle( 1,   "imgHelicopter", 0.02, .08, .08 );
+    var uuvs        = initVehicle( 1.5, "imgUUVS",       0.04, .005, .025 );
+    console.log([].concat(helicopters,uuvs));
+    update(boats, [].concat(helicopters,uuvs) );
 }
 
 /// main

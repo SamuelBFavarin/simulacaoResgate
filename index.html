@@ -11,6 +11,11 @@
     <h2> Projeto</h2>
         <div class="col-md-4">
             <h3>Entrada</h3>
+            
+            <div class="form-group">
+                <label for="time">Espaço de busca:</label>
+                <input type="number" class="form-control" id="time">
+            </div>
             <div class="form-group">
                 <label for="time">Tempo estimado de sobrevivência das pessoas em minutos:</label>
                 <input type="number" class="form-control" id="time">
@@ -39,7 +44,9 @@
         </div>
         <div class="col-md-5">
             <div style="display: none">
-                <img id="imgShip" width="20" height="120" src="assets/ship.png">
+                <img id="imgShip" width="0.08" height="0.24" src="assets/ship.png" />
+                <img id="imgHelicopter" width="0.08" height="0.08" src="assets/helicoptero.png" />
+                <img id="imgUUVS" src="assets/uuvs.png" />
             </div>
             <canvas id="Canvas" height="500" width="500" style="border:1px solid #000000;"></canvas>
         </div>
