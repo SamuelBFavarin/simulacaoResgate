@@ -1,9 +1,3 @@
-function random(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 
 // Desenhos
 
@@ -34,7 +28,7 @@ function drawVehicle(vehicle, index){
 }
 
 
-// Inicialização 
+// Inicialização
 
 function initBoats(num, boatLimit) {
     var boats = new Array();
@@ -61,7 +55,7 @@ function initVehicle(num, idImg, speed, width, height){
         vehicles[i].width  = width;
         vehicles[i].height = height;
         vehicles[i].idImg = idImg;
-        vehicles[i].speed = speed; 
+        vehicles[i].speed = speed;
     }
     return vehicles;
 }
@@ -79,23 +73,6 @@ function clearSimulation() {
     ctx.clearRect(0, 0, 500, 500);
 }
 
-function startSimulation() {
-    clearSimulation();
-    var qtdPeople = document.getElementById("people").value;
-    var boats = initBoats( qtdPeople, 50 );
-    var helicopters = initVehicle( 1,   "imgHelicopter", 0.02, .08, .08 );
-    var uuvs        = initVehicle( 1.5, "imgUUVS",       0.04, .005, .025 );
-    console.log([].concat(helicopters,uuvs));
-    update(boats, [].concat(helicopters,uuvs) );
-}
-
 /// main
 var c = document.getElementById("Canvas");
 var ctx = c.getContext("2d");
-
-
-
-
-
-
-

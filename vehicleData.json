@@ -1,0 +1,42 @@
+{
+    "_documentation":"
+        vehicleType : {
+            model: text,
+            speed: km/h,
+            crew: unitites,
+            capacity: unities,
+            length: meters,
+            height: meters,
+            width: meters, // rotor diameter
+            autonomy: time in minutes,
+            findProbability: [0,1],
+            visionRadius: meters,
+            rescueTime: minutes
+        }
+    ",
+    "helicopter" : {
+        "model": "Bell 212",
+        "speed": 190,
+        "crew": 3,
+        "capacity": 11,
+        "length": 17.43,
+        "width": 14.64,
+        "height": 3.83,
+        "autonomy": 240,
+        "findProbability": 0.4,
+        "visionRadius":  30,
+        "rescueTime": 5
+    },
+    "boat" : {
+        "speed": 60,
+        "crew": 4,
+        "capacity": 45,
+        "length": 37.5,
+        "width": 15,
+        "height": 10,
+        "autonomy": 720,
+        "findProbability": 0.9,
+        "visionRadius":  200,
+        "rescueTime": 5
+    }
+}

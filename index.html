@@ -9,9 +9,9 @@
     </head>
     <body style="margin-top: 20px">
     <h2> Projeto</h2>
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-2">
             <h3>Entrada</h3>
-            
+
             <div class="form-group">
                 <label for="time">Espaço de busca:</label>
                 <input type="number" class="form-control" id="time">
@@ -40,9 +40,20 @@
                 <label for="time3">Tempo deslocamento da unidade:</label>
                 <input type="number" class="form-control" id="time3">
             </div>
-            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation(),tempo(5)">Simular</button>
+            <div class="form-group">
+                <label for="velocidade">Velocidade de atualização (quanto tempo dura 1 seg.):</label>
+                <input type="number" class="form-control" id="velocidade" value="100" />
+            </div>
+            <div class="form-group">
+                <label>Espaço de busca (km):</label><br />
+                <input type="number" class="form-control col-sm-6" style="width: 50%" id="espacoBuscaX" value="100" />
+                <input type="number" class="form-control col-sm-6" style="width: 50%" id="espacoBuscaY" value="100" />
+                <br style="clear: both" />
+            </div>
+            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation();start()">Simular</button>
+            <button class="btn btn-warning" type="button" id="simular" onclick="stop()">Parar</button>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-5 col-sm-8">
             <div style="display: none">
                 <img id="imgShip" width="0.08" height="0.24" src="assets/ship.png" />
                 <img id="imgHelicopter" width="0.08" height="0.08" src="assets/helicoptero.png" />
@@ -50,12 +61,14 @@
             </div>
             <canvas id="Canvas" height="500" width="500" style="border:1px solid #000000;"></canvas>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 col-sm-2">
             <h3>Saida</h3>
             <label for="people">Tempo percorrido:</label>
             <span id="hora">00h</span><span id="minuto">00m</span><span id="segundo">00s</span><br>
         </div>
-        <script src="interface.js"></script>
-        <script src="cronometro.js"></script>
+        <script type="text/javascript" src="utils.js"></script>
+        <script type="text/javascript" src="interface.js"></script>
+        <script type="text/javascript" src="cronometro.js"></script>
+        <script type="text/javascript" src="control.js"></script>
     </body>
 </html>
