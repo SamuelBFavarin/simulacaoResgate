@@ -38,7 +38,7 @@ function initBoats(num, boatLimit) {
         while(x >= 230 && x<= 290){
             x = random(215,290);
         }
-        boats[i] = {}
+        boats[i] = {};
         boats[i].people = boatLimit;
         boats[i].posX = x;
         boats[i].posY = y;
