@@ -16,9 +16,15 @@ function drawBoat(boat,index){
 }
 
 function drawShip(width, height){
-    ctx.fillStyle="#612f23";
     var img = document.getElementById("imgShip");
-    ctx.drawImage(img, (c.width*0.5)-(img.width/2), 20, width*c.width, height*c.height);
+    var w = width*c.width;
+    var h = height*c.height;
+    ctx.save();
+    ctx.translate((c.width*0.5), 20.0 + h/2.0);
+    ctx.rotate(45.0* Math.PI / 180.0);
+    ctx.fillStyle="#612f23";
+    ctx.drawImage(img, -(w/2.0), -h/2.0, w, h);
+    ctx.restore();
 }
 
 function drawVehicle(vehicle, index){
