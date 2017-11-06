@@ -1,5 +1,6 @@
 var intervalo;
 var speed;
+const clock = 1000.0 / 30.0;
 
 function setTime(h,m,s){
 	document.getElementById("hora").innerHTML = twoDigits( h ) + "h";
@@ -23,7 +24,7 @@ function start() {
 		if (m == 60) { h++; s = 0; m = 0; }
 		setTime( h, m, s );
 		updateAll();
-	}, speed );
+	}, clock );
 }
 
 function stop(){

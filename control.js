@@ -7,14 +7,25 @@ var searchSpeed = 10; // km/h
 
 var vehicleData;
 
-$.getJSON('./vehicleData.json', function(data){
+var spaceData = {
+    spaceX: 0,
+    spaceY: 0,
+    realX: 500.0,
+    realY: 500.0
+};
+
+$.getJSON('vehicleData.json', function(data){
     vehicleData = data;
 });
 
 // instancia dados da simulação
 function startSimulation() {
     clearSimulation();
+    
+    spaceData.spaceX = parseFloat(document.getElementById("espacoBuscaX").value);
+    spaceData.spaceY = parseFloat(document.getElementById("espacoBuscaY").value);
     qtdPeople = document.getElementById("people").value;
+
     boats = initBoats( qtdPeople, 50 );
     helicopters = initVehicle( 1,   "imgHelicopter", 0.02, .08, .08 );
     uuvs        = initVehicle( 1.5, "imgUUVS",       0.04, .005, .025 );
@@ -31,5 +42,5 @@ function updateAll(){
 
 
 function personFound(vehicleID,x,y){
-    
+
 }

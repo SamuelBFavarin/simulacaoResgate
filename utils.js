@@ -15,3 +15,46 @@ function random(min, max) {
 function realRandom(min,max) {
     return (Math.random() * (max - min + 1)) + min;
 }
+
+function distanceBetween( x1,y1, x2,y2 ){
+    return Math.sqrt( Math.pow( x2-x1, 2 ) + Math.pow( y2-y1, 2 ) );
+}
+
+function angleBetween( x1,y1, x2,y2 ){
+    let hyp = distanceBetween( x1,y1, x2,y2 );
+    let catOp = x2 - x1;
+    let angle = (Math.asin( catOp / hyp )*180.0)/Math.PI - 90.0;
+    angle *= -1;
+    if ( y2 < y1 ){
+        angle = 360-angle;
+    }
+    return angle;
+}
+
+function moveTo( x,y, angle, distance ){
+    angle *= ( Math.PI / 180.0 );
+    return {
+        x: x + Math.cos( angle ) * distance,
+        y: y + Math.sin( angle ) * distance
+    };
+}
+
+function minutesToSeconds(minutes){ return ( minutes * 60.0 ); }
+function kmToMeters(km){ return ( km * 1000.0 ); }
+
+function speedToMeters( speedMetersPerSecond, spentTimeMilliseconds ){
+    let speed_MS = speedMetersPerSecond / 1000.0;
+    return speed_MS * spentTimeMilliseconds;
+}
+/**
+    spaceData = {
+        spaceX, spaceY,
+        realX, realY
+    }
+*/
+function toPosition( x,y, spaceData ){
+    return {
+        x: ( x / spaceData.spaceX ) * spaceData.realX,
+        y: ( y / spaceData.spaceY ) * spaceData.realY
+    };
+}
