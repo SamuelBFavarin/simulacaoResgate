@@ -152,5 +152,5 @@ function personFound(vehicleID,x,y){
 function startShip(){
     shipData.width = shipData.image.width;
     shipData.height = shipData.image.height;
-    shipData.angle = 180;
+    shipData.angle = 45;
 }

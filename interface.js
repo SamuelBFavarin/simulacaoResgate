@@ -20,7 +20,6 @@ function drawBoat(boat,index){
     ctx.arc( pos.x, pos.y, 1.5, 0, 2*Math.PI );
     ctx.fill();
     ctx.fillStyle="rgb(0, 0, 0)";
-    //ctx.fillText( boat.people, pos.x-2.5, pos.y-3);
 }
 
 function drawShip(ship){
@@ -43,14 +42,12 @@ function drawVehicle(vehicle, index){
     ctx.save();
     ctx.translate( pos.x + tam.x/2.0, pos.y + tam.y/2.0 );
     ctx.rotate( (vehicle.angle+90) * Math.PI / 180.0);
-    // ctx.drawImage(img, pos.x, pos.y, tam.x, tam.y);
     ctx.drawImage(img, -tam.x/2.0, -tam.y/2.0, tam.x, tam.y);
     ctx.restore();
 }
 
 
 // Inicialização
-
 function initBoats(num, boatLimit, ship) {
     var boats = new Array();
     var pos = toPosition(ship.width,ship.height,spaceData);
@@ -59,8 +56,11 @@ function initBoats(num, boatLimit, ship) {
     for(var i=0; i < num/boatLimit; i++){
         var x = random( (spaceData.spaceX/2.0 -w )-20, spaceData.spaceX/2.0 +w +20 );
         var y = random( 20, 20+h+10 );
-        //console.log((c.width*0.5-w/2.0)-20,w+20);
-        //console.log((20-h/20)-20,20-h+20);
+        while (estaNoNavio(x,w)){
+            console.log('aqui');
+            x = random( (spaceData.spaceX/2.0 -w )-20, (spaceData.spaceX/2.0 +w) +20 );
+            console.log(x);
+        }
         boats[i] = {};
         boats[i].people = boatLimit;
         boats[i].posX = x;
@@ -69,23 +69,30 @@ function initBoats(num, boatLimit, ship) {
     return boats;
 }
 
+function estaNoNavio(x,w) {
+
+    console.log(spaceData.spaceX/2.0 - w, ' - ', spaceData.spaceX/2.0 + w );
+    if(x >= (spaceData.spaceX/2.0 - w) && x <= (spaceData.spaceX/2.0 + w)) return true;
+    else return false;
+}
+
+
 function initVehicle(num, idImg, speed, width, height, posX, posY){
     var vehicles = new Array();
     for(var i=0; i<num; i++){
         vehicles[i] = {};
-        vehicles[i].posX = posX;
-        vehicles[i].posY = posY;
-        vehicles[i].width  = width;
-        vehicles[i].height = height;
-        vehicles[i].idImg = idImg;
-        vehicles[i].speed = speed;
-        vehicles[i].angle = 0;
+        vehicles[i].posX    = posX;
+        vehicles[i].posY    = posY;
+        vehicles[i].width   = width;
+        vehicles[i].height  = height;
+        vehicles[i].idImg   = idImg;
+        vehicles[i].speed   = speed;
+        vehicles[i].angle   = 0;
     }
     return vehicles;
 }
 
 // updates
-
 function update(boats,vehicles,shipData) {
     drawBackground();
     drawShip(shipData);
