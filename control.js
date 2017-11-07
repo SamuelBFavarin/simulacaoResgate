@@ -7,6 +7,11 @@ var searchSpeed = 10; // km/h
 
 var vehicleData;
 
+var spaceData = {
+    spaceX: 0, spaceY: 0,
+    realX: 500.0, realY: 500.0
+};
+
 $.getJSON('vehicleData.json', function(data){
     vehicleData = data;
 });
@@ -14,7 +19,7 @@ $.getJSON('vehicleData.json', function(data){
 // instancia dados da simulação
 function startSimulation() {
     clearSimulation();
-    
+
     spaceData.spaceX = kmToMeters(parseFloat(document.getElementById("espacoBuscaX").value));
     spaceData.spaceY = kmToMeters(parseFloat(document.getElementById("espacoBuscaY").value));
     qtdPeople = document.getElementById("people").value;
@@ -27,10 +32,24 @@ function startSimulation() {
     update(boats, [].concat(helicopters,safeBoat) );
 }
 
+const peopleAngle = 110; // degrees
 
 function updateAll(){
-    helicopters[0].posX += 0.004;
-    update( boats, [].concat( helicopters, safeBoat) );
+    // helicopters[0].posX += 0.004;
+
+    boats.forEach(function( boat ){
+        if ( timestampSeconds%30 == 0 ){
+            boat.angle = realRandom( 90-peopleAngle, 90+peopleAngle );
+        }
+        let newPos = moveTo(
+            boat.posX, boat.posY,
+            boat.angle,
+            1 // m/s
+        );
+        boat.posX = newPos.x;
+        boat.posY = newPos.y;
+    });
+    update( boats, [].concat( helicopters, safeBoat ) ); // draw
     //helicopters[0].posY = random(30,170);
 }
 

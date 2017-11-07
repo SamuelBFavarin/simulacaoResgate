@@ -1,5 +1,6 @@
 
 function twoDigits(num){
+    num = parseInt(num);
     if (num > 10){
         return ""+num;
     }
@@ -42,10 +43,12 @@ function moveTo( x,y, angle, distance ){
 function minutesToSeconds(minutes){ return ( minutes * 60.0 ); }
 function kmToMeters(km){ return ( km * 1000.0 ); }
 
+/*
 function speedToMeters( speedMetersPerSecond, spentTimeMilliseconds ){
     var speed_MS = speedMetersPerSecond / 1000.0;
+    console.log( speed_MS * spentTimeMilliseconds );
     return speed_MS * spentTimeMilliseconds;
-}
+}*/
 /**
     spaceData = {
         spaceX, spaceY,

@@ -1,6 +1,6 @@
 var intervalo;
 var speed;
-const clock = 1000.0 / 30.0;
+var timestampSeconds;
 
 function setTime(h,m,s){
 	document.getElementById("hora").innerHTML = twoDigits( h ) + "h";
@@ -18,13 +18,15 @@ function start() {
 	var m = 0;
 	var h = 0;
 	setTime( h, m, s );
+	timestampSeconds = 0;
 	intervalo = window.setInterval(function() {
+		updateAll();
 		++s;
+		++timestampSeconds;
 		if (s == 60) { m++; s = 0; }
 		if (m == 60) { h++; s = 0; m = 0; }
 		setTime( h, m, s );
-		updateAll();
-	}, clock );
+	}, speed );
 }
 
 function stop(){
