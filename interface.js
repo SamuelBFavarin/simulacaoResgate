@@ -6,8 +6,6 @@ var spaceData = {
     realY: 0
 };
 
-
-
 // Desenhos
 
 function drawBackground(){
@@ -25,16 +23,15 @@ function drawBoat(boat,index){
     //ctx.fillText( boat.people, pos.x-2.5, pos.y-3);
 }
 
-function drawShip(width, height){
-    var pos = toPosition(width,height, spaceData);
-    var img = document.getElementById("imgShip");
+function drawShip(ship){
+    var pos = toPosition(ship.width,ship.height,spaceData);
     var w = pos.x;
     var h = pos.y;
     ctx.save();
     ctx.translate((c.width*0.5), 20.0 + h/2.0);
-    ctx.rotate(45.0* Math.PI / 180.0);
+    ctx.rotate(ship.angle* Math.PI / 180.0);
     ctx.fillStyle="#612f23";
-    ctx.drawImage(img, -(w/2.0), -h/2.0, w, h);
+    ctx.drawImage(ship.image, -(w/2.0), -h/2.0, w, h);
     ctx.restore();
 }
 
@@ -49,14 +46,16 @@ function drawVehicle(vehicle, index){
 
 // Inicialização
 
-function initBoats(num, boatLimit) {
+function initBoats(num, boatLimit, ship) {
     var boats = new Array();
+    var pos = toPosition(ship.width,ship.height,spaceData);
+    var w = pos.x;
+    var h = pos.y;
     for(var i=0; i < num/boatLimit; i++){
-        var x = random(215,300);
-        var y = random(30,170);
-        while(x >= 230 && x<= 290){
-            x = random(215,290);
-        }
+        var x = random((c.width*0.5-w/2.0)-20,c.width*0.5+w+20);
+        var y = random((20-h/20)-10,20-h+10);
+        //console.log((c.width*0.5-w/2.0)-20,w+20);
+        //console.log((20-h/20)-20,20-h+20);
         boats[i] = {};
         boats[i].people = boatLimit;
         boats[i].posX = x;
@@ -81,10 +80,9 @@ function initVehicle(num, idImg, speed, width, height, posX, posY){
 
 // updates
 
-function update(boats,vehicles) {
+function update(boats,vehicles,shipData) {
     drawBackground();
-    var imgShip = document.getElementById("imgShip");
-    drawShip(imgShip.width , imgShip.height );
+    drawShip(shipData);
     boats.forEach(drawBoat);
     vehicles.forEach(drawVehicle);
 }

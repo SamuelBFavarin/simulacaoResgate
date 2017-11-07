@@ -12,6 +12,14 @@ var spaceData = {
     realX: 500.0, realY: 500.0
 };
 
+var shipData = {
+    image: document.getElementById("imgShip"),
+    width: 0,
+    height: 0,
+    angle: 0 
+}
+
+
 $.getJSON('vehicleData.json', function(data){
     vehicleData = data;
 });
@@ -19,17 +27,18 @@ $.getJSON('vehicleData.json', function(data){
 // instancia dados da simulação
 function startSimulation() {
     clearSimulation();
+    startShip();
 
     spaceData.spaceX = kmToMeters(parseFloat(document.getElementById("espacoBuscaX").value));
     spaceData.spaceY = kmToMeters(parseFloat(document.getElementById("espacoBuscaY").value));
     qtdPeople = document.getElementById("people").value;
 
-    boats = initBoats( qtdPeople, 50 );
+    boats = initBoats( qtdPeople, 1 , shipData);
     helicopters = initVehicle( 1,   "imgHelicopter", vehicleData['helicopter']['speed'], vehicleData['helicopter']['width'], vehicleData['helicopter']['length'], 250,250 );
     safeBoat    = initVehicle( 1,   "imgSafeBoat", vehicleData['boat']['speed'], vehicleData['boat']['width'], vehicleData['boat']['length'], 260,250 );
     //console.log(vehicleData['helicopter']['speed']);
-    console.log([].concat(helicopters,safeBoat));
-    update(boats, [].concat(helicopters,safeBoat) );
+    //console.log([].concat(helicopters,safeBoat));
+    update(boats, [].concat(helicopters,safeBoat),shipData);
 }
 
 const peopleAngle = 110; // degrees
@@ -49,11 +58,17 @@ function updateAll(){
         boat.posX = newPos.x;
         boat.posY = newPos.y;
     });
-    update( boats, [].concat( helicopters, safeBoat ) ); // draw
+    update( boats, [].concat( helicopters, safeBoat ) ,shipData); // draw
     //helicopters[0].posY = random(30,170);
 }
 
 
 function personFound(vehicleID,x,y){
 
+}
+
+function startShip(){
+    shipData.width = shipData.image.width;
+    shipData.height = shipData.image.height;
+    shipData.angle = 180;
 }
