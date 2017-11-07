@@ -2,17 +2,10 @@
 var qtdPeople;
 var boats;
 var helicopters;
-var uuvs;
+var safeBoat;
 var searchSpeed = 10; // km/h
 
 var vehicleData;
-
-var spaceData = {
-    spaceX: 0,
-    spaceY: 0,
-    realX: 500.0,
-    realY: 500.0
-};
 
 $.getJSON('vehicleData.json', function(data){
     vehicleData = data;
@@ -22,21 +15,22 @@ $.getJSON('vehicleData.json', function(data){
 function startSimulation() {
     clearSimulation();
     
-    spaceData.spaceX = parseFloat(document.getElementById("espacoBuscaX").value);
-    spaceData.spaceY = parseFloat(document.getElementById("espacoBuscaY").value);
+    spaceData.spaceX = kmToMeters(parseFloat(document.getElementById("espacoBuscaX").value));
+    spaceData.spaceY = kmToMeters(parseFloat(document.getElementById("espacoBuscaY").value));
     qtdPeople = document.getElementById("people").value;
 
     boats = initBoats( qtdPeople, 50 );
-    helicopters = initVehicle( 1,   "imgHelicopter", 0.02, .08, .08 );
-    uuvs        = initVehicle( 1.5, "imgUUVS",       0.04, .005, .025 );
-    console.log([].concat(helicopters,uuvs));
-    update(boats, [].concat(helicopters,uuvs) );
+    helicopters = initVehicle( 1,   "imgHelicopter", vehicleData['helicopter']['speed'], vehicleData['helicopter']['width'], vehicleData['helicopter']['length'], 250,250 );
+    safeBoat    = initVehicle( 1,   "imgSafeBoat", vehicleData['boat']['speed'], vehicleData['boat']['width'], vehicleData['boat']['length'], 260,250 );
+    //console.log(vehicleData['helicopter']['speed']);
+    console.log([].concat(helicopters,safeBoat));
+    update(boats, [].concat(helicopters,safeBoat) );
 }
 
 
 function updateAll(){
     helicopters[0].posX += 0.004;
-    update( boats, [].concat( helicopters, uuvs ) );
+    update( boats, [].concat( helicopters, safeBoat) );
     //helicopters[0].posY = random(30,170);
 }
 

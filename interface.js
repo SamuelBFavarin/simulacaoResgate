@@ -1,24 +1,35 @@
 
+var spaceData = {
+    spaceX: 0,
+    spaceY: 0,
+    realX: 0,
+    realY: 0
+};
+
+
+
 // Desenhos
 
 function drawBackground(){
     ctx.fillStyle="rgb(213, 255, 250)";
-    ctx.fillRect(0,0,500,500);
+    ctx.fillRect(0,0,c.width,c.height);
 }
 
 function drawBoat(boat,index){
+    var pos = toPosition(boat.posX, boat.posY, spaceData);
     ctx.beginPath();
     ctx.fillStyle="rgb(206, 159, 53)";
-    ctx.arc( boat.posX, boat.posY, 1.5, 0, 2*Math.PI );
+    ctx.arc( pos.x, pos.y, 1.5, 0, 2*Math.PI );
     ctx.fill();
     ctx.fillStyle="rgb(0, 0, 0)";
-    ctx.fillText( boat.people, boat.posX-2.5, boat.posY-3 );
+    //ctx.fillText( boat.people, pos.x-2.5, pos.y-3);
 }
 
 function drawShip(width, height){
+    var pos = toPosition(width,height, spaceData);
     var img = document.getElementById("imgShip");
-    var w = width*c.width;
-    var h = height*c.height;
+    var w = pos.x;
+    var h = pos.y;
     ctx.save();
     ctx.translate((c.width*0.5), 20.0 + h/2.0);
     ctx.rotate(45.0* Math.PI / 180.0);
@@ -28,9 +39,11 @@ function drawShip(width, height){
 }
 
 function drawVehicle(vehicle, index){
+    var pos = toPosition(vehicle.posX,vehicle.posY,spaceData);
+    var tam = toPosition(vehicle.width, vehicle.height, spaceData);
     ctx.fillStyle="#612f23";
     var img = document.getElementById(vehicle.idImg);
-    ctx.drawImage(img, vehicle.posX * c.width, vehicle.posY * c.height, vehicle.width*c.width, vehicle.height*c.height);
+    ctx.drawImage(img, pos.x, pos.y, tam.x, tam.y);
 }
 
 
@@ -52,12 +65,12 @@ function initBoats(num, boatLimit) {
     return boats;
 }
 
-function initVehicle(num, idImg, speed, width, height){
+function initVehicle(num, idImg, speed, width, height, posX, posY){
     var vehicles = new Array();
     for(var i=0; i<num; i++){
         vehicles[i] = {};
-        vehicles[i].posX = 0.5;
-        vehicles[i].posY = 0.9;
+        vehicles[i].posX = posX;
+        vehicles[i].posY = posY;
         vehicles[i].width  = width;
         vehicles[i].height = height;
         vehicles[i].idImg = idImg;
@@ -70,7 +83,8 @@ function initVehicle(num, idImg, speed, width, height){
 
 function update(boats,vehicles) {
     drawBackground();
-    drawShip( .08, .24 );
+    var imgShip = document.getElementById("imgShip");
+    drawShip(imgShip.width , imgShip.height );
     boats.forEach(drawBoat);
     vehicles.forEach(drawVehicle);
 }
@@ -81,4 +95,6 @@ function clearSimulation() {
 
 /// main
 var c = document.getElementById("Canvas");
+spaceData.realX = c.width;
+spaceData.realY = c.height; 
 var ctx = c.getContext("2d");
