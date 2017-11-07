@@ -24,18 +24,22 @@
                 <label for="people">Quantidade de pessoas:</label>
                 <input type="number" class="form-control" value="value" id="people">
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="ship">Perímetro do navio:</label>
                 <input type="number" class="form-control" id="ship">
+            </div>-->
+            <div class="form-group">
+                <label for="helicopters">Quantidade helicópteros:</label>
+                <input type="number" class="form-control" id="helicopters">
             </div>
             <div class="form-group">
-                <label for="u">Quantidade unidades:</label>
-                <input type="number" class="form-control" id="u">
+                <label for="safeBoats">Quantidade barcos:</label>
+                <input type="number" class="form-control" id="safeBoats">
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="time3">Tempo deslocamento da unidade:</label>
                 <input type="number" class="form-control" id="time3">
-            </div>
+            </div>-->
             <div class="form-group">
                 <label for="baseDistance">Distância do ponto inicial (km):</label>
                 <input type="number" class="form-control" id="baseDistance" value="10">
@@ -50,8 +54,6 @@
                 <input type="number" class="form-control col-sm-6" style="width: 50%" id="espacoBuscaY" value="0.5" />
                 <br style="clear: both" />
             </div>
-            <button class="btn btn-success" type="button" id="simular" onclick="startSimulation();start()">Simular</button>
-            <button class="btn btn-warning" type="button" id="parar" onclick="stop()">Parar</button>
         </div>
         <div class="col-md-5 col-sm-8">
             <div style="display: none">
@@ -62,6 +64,12 @@
 
             </div>
             <canvas id="Canvas" height="500" width="500" style="border:1px solid #000000;"></canvas>
+            <div style="width: 500px;" >
+                <div style="float: right; margin-top: 4px;">
+                    <button class="btn btn-warning" type="button" id="parar" onclick="stop()">Parar</button>
+                    <button class="btn btn-success" type="button" id="simular" onclick="startSimulation();start()">Simular</button>
+                </div>
+            </div>
         </div>
         <div class="col-md-3 col-sm-2">
             <h3>Saida</h3>

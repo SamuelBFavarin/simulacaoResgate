@@ -47,10 +47,13 @@ function startSimulation() {
         baseDistance
     );
 
+    var nHelicopters = parseInt(document.getElementById("helicopters").value);
+    var nBoats       = parseInt(document.getElementById("safeBoats").value);
+
     // init vehicles
-    boats = initBoats( qtdPeople, 1 , shipData);
-    helicopters = initVehicle( 2, "imgHelicopter", vehicleData['helicopter']['speed'], vehicleData['helicopter']['width'], vehicleData['helicopter']['length'], basePoint.x, basePoint.y );
-    safeBoat    = initVehicle( 1, "imgSafeBoat", vehicleData['boat']['speed'], vehicleData['boat']['width'], vehicleData['boat']['length'], basePoint.x, basePoint.y );
+    boats = initBoats( qtdPeople, 1, shipData);
+    helicopters = initVehicle( nHelicopters, "imgHelicopter", vehicleData['helicopter'], basePoint );
+    safeBoat    = initVehicle( nBoats, "imgSafeBoat", vehicleData['boat'], basePoint );
 
     // init vehicles data
     var accPosition = basePoint;
@@ -107,10 +110,42 @@ function updateAll(){
             } break;
 
             case 'searching people':{
-                vehicle.state = 'moving to base';
+                var rescueTime = 0;
+                var v = toPosition( vehicle.posX, vehicle.posY, spaceData );
+                boats = boats.filter(function(boat,index){
+                    var b = toPosition( boat.posX, boat.posY, spaceData );
+                    var distance = distanceBetween( v.x, v.y,  b.x, b.y );
+                    if ( distance <= vehicle.visionRadius ){ // on vision
+                        if ( realRandom(0,1) < vehicle.findProbability ){ // if seen
+                            rescueTime += vehicle.rescueTime;
+                            return false; // got that guy
+                        }
+                    }
+                    return true; // keep
+                });
+                if ( rescueTime > 0 ){
+                    vehicle.state = 'rescue process';
+                    vehicle.stoppedTimer = minutesToSeconds(rescueTime);
+                } else {
+                    // new position
+                    if ( timestampSeconds%60 == 0 ){
+                        vehicle.angle = realRandom( 0, 360 );
+                    }
+                    var newPos = moveTo(
+                        vehicle.posX, vehicle.posY,
+                        vehicle.angle,
+                        searchSpeed // m/s
+                    );
+                    vehicle.posX = newPos.x;
+                    vehicle.posY = newPos.y;
+                }
             } break;
 
             case 'rescue process':{
+                vehicle.stoppedTimer -= minutesToSeconds(vehicle.rescueTime);
+                if ( vehicle.stoppedTimer <= 0 ){
+                    vehicle.state = 'searching people';
+                }
             } break;
 
             case 'moving to base':{

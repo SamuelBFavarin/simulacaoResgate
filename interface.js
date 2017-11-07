@@ -57,9 +57,9 @@ function initBoats(num, boatLimit, ship) {
         var x = random( (spaceData.spaceX/2.0 -w )-20, spaceData.spaceX/2.0 +w +20 );
         var y = random( 20, 20+h+10 );
         while (estaNoNavio(x,w)){
-            console.log('aqui');
+            // console.log('aqui');
             x = random( (spaceData.spaceX/2.0 -w )-20, (spaceData.spaceX/2.0 +w) +20 );
-            console.log(x);
+            // console.log(x);
         }
         boats[i] = {};
         boats[i].people = boatLimit;
@@ -71,22 +71,25 @@ function initBoats(num, boatLimit, ship) {
 
 function estaNoNavio(x,w) {
 
-    console.log(spaceData.spaceX/2.0 - w, ' - ', spaceData.spaceX/2.0 + w );
+    // console.log(spaceData.spaceX/2.0 - w, ' - ', spaceData.spaceX/2.0 + w );
     if(x >= (spaceData.spaceX/2.0 - w) && x <= (spaceData.spaceX/2.0 + w)) return true;
     else return false;
 }
 
 
-function initVehicle(num, idImg, speed, width, height, posX, posY){
+function initVehicle(num, idImg, vehicle, pos){
     var vehicles = new Array();
     for(var i=0; i<num; i++){
         vehicles[i] = {};
-        vehicles[i].posX    = posX;
-        vehicles[i].posY    = posY;
-        vehicles[i].width   = width;
-        vehicles[i].height  = height;
+        vehicles[i].posX    = pos.x;
+        vehicles[i].posY    = pos.y;
         vehicles[i].idImg   = idImg;
-        vehicles[i].speed   = speed;
+        vehicles[i].speed   = vehicle['speed'];
+        vehicles[i].width   = vehicle['width'];
+        vehicles[i].height  = vehicle['length'];
+        vehicles[i].rescueTime  = vehicle['rescueTime'];
+        vehicles[i].findProbability  = vehicle['findProbability'];
+        vehicles[i].visionRadius  = vehicle['visionRadius'];
         vehicles[i].angle   = 0;
     }
     return vehicles;
