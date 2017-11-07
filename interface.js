@@ -40,7 +40,12 @@ function drawVehicle(vehicle, index){
     var tam = toPosition(vehicle.width, vehicle.height, spaceData);
     ctx.fillStyle="#612f23";
     var img = document.getElementById(vehicle.idImg);
-    ctx.drawImage(img, pos.x, pos.y, tam.x, tam.y);
+    ctx.save();
+    ctx.translate( pos.x + tam.x/2.0, pos.y + tam.y/2.0 );
+    ctx.rotate( (vehicle.angle+90) * Math.PI / 180.0);
+    // ctx.drawImage(img, pos.x, pos.y, tam.x, tam.y);
+    ctx.drawImage(img, -tam.x/2.0, -tam.y/2.0, tam.x, tam.y);
+    ctx.restore();
 }
 
 
@@ -74,6 +79,7 @@ function initVehicle(num, idImg, speed, width, height, posX, posY){
         vehicles[i].height = height;
         vehicles[i].idImg = idImg;
         vehicles[i].speed = speed;
+        vehicles[i].angle = 0;
     }
     return vehicles;
 }
