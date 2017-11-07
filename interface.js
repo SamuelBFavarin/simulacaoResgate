@@ -52,8 +52,8 @@ function initBoats(num, boatLimit, ship) {
     var w = pos.x;
     var h = pos.y;
     for(var i=0; i < num/boatLimit; i++){
-        var x = random((c.width*0.5-w/2.0)-20,c.width*0.5+w+20);
-        var y = random((20-h/20)-10,20-h+10);
+        var x = random( (spaceData.spaceX/2.0 -w )-20, spaceData.spaceX/2.0 +w +20 );
+        var y = random( 20, 20+h+10 );
         //console.log((c.width*0.5-w/2.0)-20,w+20);
         //console.log((20-h/20)-20,20-h+20);
         boats[i] = {};
@@ -94,5 +94,5 @@ function clearSimulation() {
 /// main
 var c = document.getElementById("Canvas");
 spaceData.realX = c.width;
-spaceData.realY = c.height; 
+spaceData.realY = c.height;
 var ctx = c.getContext("2d");

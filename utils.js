@@ -40,9 +40,11 @@ function moveTo( x,y, angle, distance ){
     };
 }
 
+function hourToMinutes(hours){ return ( hours*60.0 ); }
+function hourToSeconds(hours){ return ( hours*60.0*60.0 ); }
 function minutesToSeconds(minutes){ return ( minutes * 60.0 ); }
 function kmToMeters(km){ return ( km * 1000.0 ); }
-
+function kmHToMetersS(kmH){ return ( kmToMeters(kmH)/hourToSeconds(1.0) ); }
 /*
 function speedToMeters( speedMetersPerSecond, spentTimeMilliseconds ){
     var speed_MS = speedMetersPerSecond / 1000.0;

@@ -4,6 +4,8 @@ var boats;
 var helicopters;
 var safeBoat;
 var searchSpeed = 10; // km/h
+const peopleAngle = 100; // degrees
+const peopleChangeTime = minutesToSeconds(2); // seconds
 
 var vehicleData;
 
@@ -16,7 +18,7 @@ var shipData = {
     image: document.getElementById("imgShip"),
     width: 0,
     height: 0,
-    angle: 0 
+    angle: 0
 }
 
 
@@ -41,19 +43,17 @@ function startSimulation() {
     update(boats, [].concat(helicopters,safeBoat),shipData);
 }
 
-const peopleAngle = 110; // degrees
-
 function updateAll(){
     // helicopters[0].posX += 0.004;
 
     boats.forEach(function( boat ){
-        if ( timestampSeconds%30 == 0 ){
+        if ( timestampSeconds%peopleChangeTime == 0 ){
             boat.angle = realRandom( 90-peopleAngle, 90+peopleAngle );
         }
         let newPos = moveTo(
             boat.posX, boat.posY,
             boat.angle,
-            1 // m/s
+            0.8 // m/s
         );
         boat.posX = newPos.x;
         boat.posY = newPos.y;
