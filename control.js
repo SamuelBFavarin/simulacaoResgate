@@ -7,6 +7,7 @@ var searchSpeed = 10; // km/h
 const peopleAngle = 100; // degrees
 const peopleChangeTime = minutesToSeconds(2); // seconds
 
+// afundamento navio
 var opacity;
 var velocidadeAfundamento = 0.001;
 
@@ -26,6 +27,8 @@ var shipData = {
     angle: 0,
     opacity: 1
 };
+
+var peopleSave;
 
 
 $.getJSON('vehicleData.json', function(data){
