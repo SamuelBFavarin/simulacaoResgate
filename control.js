@@ -29,6 +29,7 @@ var shipData = {
 };
 
 var peopleSave;
+var survivalTime;
 
 
 $.getJSON('vehicleData.json', function(data){
@@ -38,6 +39,7 @@ $.getJSON('vehicleData.json', function(data){
 // instancia dados da simulação
 function startSimulation() {
     opacity = 1;
+    alterStatus('Buscando Sobreviventes','green');
     clearSimulation();
     startShip(opacity);
 
@@ -45,6 +47,7 @@ function startSimulation() {
     spaceData.spaceX = kmToMeters(parseFloat(document.getElementById("espacoBuscaX").value));
     spaceData.spaceY = kmToMeters(parseFloat(document.getElementById("espacoBuscaY").value));
     qtdPeople = document.getElementById("people").value;
+    survivalTime = document.getElementById("time").value;
 
     var baseDistance = kmToMeters(parseFloat(document.getElementById("baseDistance").value));
     var baseAngle = random( 0, 360 );
@@ -189,13 +192,16 @@ function updateAll(){
 
     // contagem de pessoas salvas
     countPeopleSave();
+    if(die(timestampSeconds)) {
+        alterStatus('Tempo de vida esgotado','red');
+        stop();
+    }
 
     update( boats, [].concat( helicopters, safeBoat ), shipData ); // draw
 }
 
-
 function personFound(vehicleID,x,y){
-    
+
 }
 
 function startShip(opacity){
@@ -208,4 +214,14 @@ function startShip(opacity){
 function countPeopleSave() {
     peopleSave = qtdPeople - boats.length;
     document.getElementById('peopleSave').innerHTML = peopleSave;
+}
+
+function die(seconds) {
+    if(minutesToSeconds(survivalTime) <= seconds) return true;
+    else return false;
+}
+
+function alterStatus(status,color){
+    document.getElementById('status').innerHTML = status;
+    document.getElementById('status').style.color = color;
 }
