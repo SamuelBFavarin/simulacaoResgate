@@ -12,6 +12,7 @@ var opacity;
 var velocidadeAfundamento = 0.001;
 
 var basePoint;
+var algorithm;
 
 var vehicleData;
 
@@ -39,6 +40,7 @@ $.getJSON('vehicleData.json', function(data){
 // instancia dados da simulação
 function startSimulation() {
     opacity = 1;
+    peopleSave = 0;
     alterStatus('Buscando Sobreviventes','green');
     clearSimulation();
     startShip(opacity);
@@ -48,6 +50,7 @@ function startSimulation() {
     spaceData.spaceY = kmToMeters(parseFloat(document.getElementById("espacoBuscaY").value));
     qtdPeople = document.getElementById("people").value;
     survivalTime = document.getElementById("time").value;
+    algorithm = eval( document.getElementById("selectOfAlgorithms").value );
 
     var baseDistance = kmToMeters(parseFloat(document.getElementById("baseDistance").value));
     var baseAngle = random( 0, 360 );
@@ -78,6 +81,27 @@ function startSimulation() {
     update(boats, [].concat(helicopters,safeBoat),shipData); // draw
 }
 
+
+function moveVehicle( vehicle, speed, posX, posY ){
+    vehicle.angle = angleBetween(
+        vehicle.posX, vehicle.posY,
+        posX, posY
+    );
+    var newPos = moveTo(
+        vehicle.posX, vehicle.posY,
+        vehicle.angle,
+        Math.min(
+            distanceBetween(
+                vehicle.posX, vehicle.posY,
+                posX, posY
+            ), speed
+        )
+    );
+    vehicle.posX = newPos.x;
+    vehicle.posY = newPos.y;
+}
+
+
 function updateAll(){
     // helicopters[0].posX += 0.004;
 
@@ -88,7 +112,7 @@ function updateAll(){
         var newPos = moveTo(
             boat.posX, boat.posY,
             boat.angle,
-            0.8 // m/s
+            0.4 // 0.8 // m/s
         );
         boat.posX = newPos.x;
         boat.posY = newPos.y;
@@ -98,22 +122,7 @@ function updateAll(){
         switch (vehicle.state) {
 
             case 'moving to critic area':{
-                vehicle.angle = angleBetween(
-                    vehicle.posX, vehicle.posY,
-                    spaceData.spaceX/2.0, spaceData.spaceY/2.0
-                );
-                var newPos = moveTo(
-                    vehicle.posX, vehicle.posY,
-                    vehicle.angle,
-                    Math.min(
-                        distanceBetween(
-                            vehicle.posX, vehicle.posY,
-                            spaceData.spaceX/2.0, spaceData.spaceY/2.0
-                        ), kmHToMetersS( vehicle.speed )
-                    )
-                );
-                vehicle.posX = newPos.x;
-                vehicle.posY = newPos.y;
+                moveVehicle( vehicle, kmHToMetersS( vehicle.speed ), spaceData.spaceX/2.0, spaceData.spaceY/2.0 );
                 // if arrived to initial position
                 if ( vehicle.posX == spaceData.spaceX/2.0 && vehicle.posY == spaceData.spaceY/2.0 ){
                     vehicle.state = 'searching people';
@@ -122,33 +131,21 @@ function updateAll(){
 
             case 'searching people':{
                 var rescueTime = 0;
-                var v = toPosition( vehicle.posX, vehicle.posY, spaceData );
                 boats = boats.filter(function(boat,index){
-                    var b = toPosition( boat.posX, boat.posY, spaceData );
-                    var distance = distanceBetween( v.x, v.y,  b.x, b.y );
+                    var distance = distanceBetween( vehicle.posX, vehicle.posY,  boat.posX, boat.posY );
                     if ( distance <= vehicle.visionRadius ){ // on vision
                         if ( realRandom(0,1) < vehicle.findProbability ){ // if seen
                             rescueTime += vehicle.rescueTime;
                             return false; // got that guy
                         }
                     }
-                    return true; // keep
+                    return true; // keep... sorry
                 });
-                if ( rescueTime > 0 ){
+                if ( rescueTime > 0 ){ // found somebody!
                     vehicle.state = 'rescue process';
                     vehicle.stoppedTimer = minutesToSeconds(rescueTime);
-                } else {
-                    // new position
-                    if ( timestampSeconds%60 === 0 ){
-                        vehicle.angle = realRandom( 0, 360 );
-                    }
-                    var newPos = moveTo(
-                        vehicle.posX, vehicle.posY,
-                        vehicle.angle,
-                        searchSpeed // m/s
-                    );
-                    vehicle.posX = newPos.x;
-                    vehicle.posY = newPos.y;
+                } else { // is there enybody out there?
+                    algorithm.searchMove(vehicle);
                 }
             } break;
 
@@ -160,22 +157,7 @@ function updateAll(){
             } break;
 
             case 'moving to base':{
-                vehicle.angle = angleBetween(
-                    vehicle.posX, vehicle.posY,
-                    basePoint.x, basePoint.y
-                );
-                var newPos = moveTo(
-                    vehicle.posX, vehicle.posY,
-                    vehicle.angle,
-                    Math.min(
-                        distanceBetween(
-                            vehicle.posX, vehicle.posY,
-                            basePoint.x, basePoint.y
-                        ), kmHToMetersS( vehicle.speed )
-                    )
-                );
-                vehicle.posX = newPos.x;
-                vehicle.posY = newPos.y;
+                moveVehicle( vehicle, kmHToMetersS( vehicle.speed ), basePoint.x, basePoint.y );
                 // if arrived to base
                 if ( vehicle.posX === basePoint.x && vehicle.posY === basePoint.y ){
                     vehicle.state = 'stopped';

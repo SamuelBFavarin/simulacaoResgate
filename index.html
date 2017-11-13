@@ -55,6 +55,12 @@
             </div>
             <canvas id="Canvas" height="500" width="500" style="border:1px solid #000000;"></canvas>
             <div style="width: 500px;" >
+                <div class="form-group">
+                    <label>Algoritmo para busca:</label><br />
+                    <select class="form-control col-sm-6" id="selectOfAlgorithms">
+                        <option value="randomAlgorithm">Aleatório</option>
+                    </select>
+                </div>
                 <div style="float: right; margin-top: 4px;">
                     <button class="btn btn-warning" type="button" id="parar" onclick="stop()">Parar</button>
                     <button class="btn btn-success" type="button" id="simular" onclick="startSimulation();start()">Simular</button>
@@ -72,5 +78,6 @@
         <script type="text/javascript" src="interface.js"></script>
         <script type="text/javascript" src="cronometro.js"></script>
         <script type="text/javascript" src="control.js"></script>
+        <script type="text/javascript" src="algorithms/random.js"></script>
     </body>
 </html>
