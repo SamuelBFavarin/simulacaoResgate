@@ -29,7 +29,7 @@ function drawShip(ship){
     ctx.save();
     ctx.translate((c.width*0.5), 20.0 + h/2.0);
     ctx.rotate(ship.angle* Math.PI / 180.0);
-    ctx.fillStyle="#612f23";
+    ctx.globalAlpha = ship.opacity;
     ctx.drawImage(ship.image, -(w/2.0), -h/2.0, w, h);
     ctx.restore();
 }
@@ -54,11 +54,11 @@ function initBoats(num, boatLimit, ship) {
     var w = pos.x;
     var h = pos.y;
     for(var i=0; i < num/boatLimit; i++){
-        var x = random( (spaceData.spaceX/2.0 -w )-20, spaceData.spaceX/2.0 +w +20 );
+        var x = random( (spaceData.spaceX/2.0 -w )-2, spaceData.spaceX/2.0 +w +2 );
         var y = random( 20, 20+h+10 );
         while (estaNoNavio(x,w)){
             // console.log('aqui');
-            x = random( (spaceData.spaceX/2.0 -w )-20, (spaceData.spaceX/2.0 +w) +20 );
+            x = random( (spaceData.spaceX/2.0 -w )-2, (spaceData.spaceX/2.0 +w) +2 );
             // console.log(x);
         }
         boats[i] = {};

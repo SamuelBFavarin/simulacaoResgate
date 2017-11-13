@@ -7,6 +7,9 @@ var searchSpeed = 10; // km/h
 const peopleAngle = 100; // degrees
 const peopleChangeTime = minutesToSeconds(2); // seconds
 
+var opacity;
+var velocidadeAfundamento = 0.001;
+
 var basePoint;
 
 var vehicleData;
@@ -20,8 +23,9 @@ var shipData = {
     image: document.getElementById("imgShip"),
     width: 0,
     height: 0,
-    angle: 0
-}
+    angle: 0,
+    opacity: 1
+};
 
 
 $.getJSON('vehicleData.json', function(data){
@@ -30,8 +34,9 @@ $.getJSON('vehicleData.json', function(data){
 
 // instancia dados da simulação
 function startSimulation() {
+    opacity = 1;
     clearSimulation();
-    startShip();
+    startShip(opacity);
 
     // obtain parameters
     spaceData.spaceX = kmToMeters(parseFloat(document.getElementById("espacoBuscaX").value));
@@ -174,9 +179,13 @@ function updateAll(){
         }
     });
 
+    opacity = opacity - velocidadeAfundamento;
+    if(opacity >=0){
+        startShip(opacity);
+    }
+
 
     update( boats, [].concat( helicopters, safeBoat ), shipData ); // draw
-    //helicopters[0].posY = random(30,170);
 }
 
 
@@ -184,8 +193,9 @@ function personFound(vehicleID,x,y){
 
 }
 
-function startShip(){
+function startShip(opacity){
     shipData.width = shipData.image.width;
     shipData.height = shipData.image.height;
     shipData.angle = 45;
+    shipData.opacity = opacity;
 }
