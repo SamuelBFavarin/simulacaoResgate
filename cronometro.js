@@ -23,8 +23,8 @@ function start() {
 		updateAll();
 		++s;
 		++timestampSeconds;
-		if (s == 60) { m++; s = 0; }
-		if (m == 60) { h++; s = 0; m = 0; }
+		if (s === 60) { m++; s = 0; }
+		if (m === 60) { h++; s = 0; m = 0; }
 		setTime( h, m, s );
 	}, speed );
 }

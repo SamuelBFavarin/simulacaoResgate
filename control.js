@@ -79,7 +79,7 @@ function updateAll(){
     // helicopters[0].posX += 0.004;
 
     boats.forEach(function( boat ){
-        if ( timestampSeconds%peopleChangeTime == 0 ){
+        if ( timestampSeconds%peopleChangeTime === 0 ){
             boat.angle = realRandom( 90-peopleAngle, 90+peopleAngle );
         }
         var newPos = moveTo(
@@ -136,7 +136,7 @@ function updateAll(){
                     vehicle.stoppedTimer = minutesToSeconds(rescueTime);
                 } else {
                     // new position
-                    if ( timestampSeconds%60 == 0 ){
+                    if ( timestampSeconds%60 === 0 ){
                         vehicle.angle = realRandom( 0, 360 );
                     }
                     var newPos = moveTo(
@@ -174,7 +174,7 @@ function updateAll(){
                 vehicle.posX = newPos.x;
                 vehicle.posY = newPos.y;
                 // if arrived to base
-                if ( vehicle.posX == basePoint.x && vehicle.posY == basePoint.y ){
+                if ( vehicle.posX === basePoint.x && vehicle.posY === basePoint.y ){
                     vehicle.state = 'stopped';
                 }
             } break;
@@ -187,13 +187,15 @@ function updateAll(){
         startShip(opacity);
     }
 
+    // contagem de pessoas salvas
+    countPeopleSave();
 
     update( boats, [].concat( helicopters, safeBoat ), shipData ); // draw
 }
 
 
 function personFound(vehicleID,x,y){
-
+    
 }
 
 function startShip(opacity){
@@ -201,4 +203,9 @@ function startShip(opacity){
     shipData.height = shipData.image.height;
     shipData.angle = 45;
     shipData.opacity = opacity;
+}
+
+function countPeopleSave() {
+    peopleSave = qtdPeople - boats.length;
+    document.getElementById('peopleSave').innerHTML = peopleSave;
 }
