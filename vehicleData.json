@@ -25,7 +25,7 @@
         "autonomy": 240,
         "findProbability": 0.4,
         "visionRadius":  30,
-        "rescueTime": 7
+        "rescueTime": 4
     },
     "boat" : {
         "speed": 60,
@@ -37,6 +37,6 @@
         "autonomy": 720,
         "findProbability": 0.9,
         "visionRadius":  200,
-        "rescueTime": 10
+        "rescueTime": 6
     }
 }

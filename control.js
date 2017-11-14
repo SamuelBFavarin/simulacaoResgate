@@ -128,7 +128,6 @@ function updateBoat( boat ){
 
 function updateAll(){
     // helicopters[0].posX += 0.004;
-
     boats.forEach( (boat) => { updateBoat(boat) } );
 
     // teste já terminou o tempo de preparação da equipe
@@ -246,6 +245,11 @@ function updateAll(){
         alterStatus('Resgate Completado', 'green');
         stop();
     }
+
+    if(!boatsInMap(boats)){
+        alterStatus('Pessoas fora do espaço de busca', 'red');
+        stop();
+    }
     // verificação de mortos
     die(timestampSeconds);
 
@@ -261,8 +265,6 @@ function startShip(opacity){
 
 function countPeopleResgat(status) {
 
-
-
     if(status === 'morto'){resgatPeopleDie++;}
     if(status === 'vivo'){resgatPeopleLife++;}
 
@@ -276,6 +278,7 @@ function countPeopleResgat(status) {
 
 function die(seconds) {
     for(var i=0; i<boats.length; i++) {
+        //console.log(boats[i].surviveTime);
         if (minutesToSeconds(boats[i].surviveTime) < seconds) {
             boats[i].status = 'morto';
         }
@@ -285,6 +288,22 @@ function die(seconds) {
 function alterStatus(status,color){
     document.getElementById('status').innerHTML = status;
     document.getElementById('status').style.color = color;
+}
+
+function boatsInMap(boats){
+    var peopleOff = 0;
+    for(var i=0; i<boats.length; i++){
+        if(boats[i].posX > spaceData.realX) peopleOff++;
+        else if(boats[i].posX < 0) peopleOff++;
+        else if(boats[i].posY > spaceData.realY) peopleOff++;
+        else if(boats[i].posY < 0) peopleOff++;
+    }
+
+    if(peopleOff >= boats.length) {
+        return false;
+    }else{
+        return true;
+    }
 }
 
 

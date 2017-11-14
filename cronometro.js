@@ -31,4 +31,7 @@ function start() {
 
 function stop(){
 	window.clearInterval(intervalo);
+    resgatPeopleLife = 0;
+    resgatPeopleDie = 0;
+	
 }
