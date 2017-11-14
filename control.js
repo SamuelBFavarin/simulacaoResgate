@@ -74,6 +74,7 @@ function startSimulation() {
     [].concat(helicopters,safeBoat).forEach(function(vehicle){
         vehicle.state = 'moving to critic area';
         vehicle.timeMoving = 0;
+        vehicle.peopleCount = 0;
         vehicle.posX = accPosition.x;
         vehicle.posY = accPosition.y;
         accPosition = moveTo( accPosition.x, accPosition.y, baseAngle, Math.max(vehicle.width,vehicle.height) );
@@ -183,8 +184,13 @@ function updateAll(){
             case 'rescue process':{
                 vehicle.stoppedTimer -= 1;
                 if ( vehicle.stoppedTimer <= 0 ){
-                    vehicle.state = 'searching people';
                     vehicle.goingFor = undefined;
+                    ++vehicle.peopleCount;
+                    if ( vehicle.peopleCount == vehicle.capacity ){
+                        vehicle.state = 'moving to base';
+                    } else {
+                        vehicle.state = 'searching people';
+                    }
                 }
             } break;
 
@@ -194,6 +200,12 @@ function updateAll(){
                 if ( vehicle.posX === basePoint.x && vehicle.posY === basePoint.y ){
                     vehicle.state = 'stopped';
                 }
+            } break;
+
+            case 'stopped':{
+                // what?
+                vehicle.timeMoving = 0;
+                vehicle.peopleCount = 0;
             } break;
             default:
         }
