@@ -13,10 +13,14 @@ function drawBackground(){
     ctx.fillRect(0,0,c.width,c.height);
 }
 
-function drawBoat(boat,index){
+function drawBoat( boat, fillStyle ){
     var pos = toPosition(boat.posX, boat.posY, spaceData);
     ctx.beginPath();
-    ctx.fillStyle="rgb(206, 159, 53)";
+    if ( typeof fillStyle !== 'string' ){
+        ctx.fillStyle = "rgb(206, 159, 53)";
+    } else {
+        ctx.fillStyle = fillStyle;
+    }
     ctx.arc( pos.x, pos.y, 1.5, 0, 2*Math.PI );
     ctx.fill();
     ctx.fillStyle="rgb(0, 0, 0)";
@@ -101,6 +105,11 @@ function update(boats,vehicles,shipData) {
     drawShip(shipData);
     boats.forEach(drawBoat);
     vehicles.forEach(drawVehicle);
+    vehicles.forEach((vehicle) => {
+        if ( vehicle.goingFor !== undefined ){
+            drawBoat( vehicle.goingFor, 'rgb(0,170,0)' );
+        }
+    });
 }
 
 function clearSimulation() {
