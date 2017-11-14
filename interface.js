@@ -21,6 +21,8 @@ function drawBoat( boat, fillStyle ){
     } else {
         ctx.fillStyle = fillStyle;
     }
+
+    if(boat.status === 'morto') ctx.fillStyle = "#FF0000";
     ctx.arc( pos.x, pos.y, 1.5, 0, 2*Math.PI );
     ctx.fill();
     ctx.fillStyle="rgb(0, 0, 0)";
@@ -52,7 +54,7 @@ function drawVehicle(vehicle, index){
 
 
 // Inicialização
-function initBoats(num, boatLimit, ship) {
+function initBoats(num, boatLimit, ship, surviveTime, maxDetouTime) {
     var boats = new Array();
     var pos = toPosition(ship.width,ship.height,spaceData);
     var w = pos.x;
@@ -69,6 +71,8 @@ function initBoats(num, boatLimit, ship) {
         boats[i].people = boatLimit;
         boats[i].posX = x;
         boats[i].posY = y;
+        boats[i].surviveTime = calcMaxTime(surviveTime,maxDetouTime);
+        boats[i].status = 'vivo';
     }
     return boats;
 }

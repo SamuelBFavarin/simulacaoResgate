@@ -31,6 +31,7 @@ var shipData = {
 
 var peopleSave;
 var survivalTime;
+var detouMaxTime;
 
 
 $.getJSON('vehicleData.json', function(data){
@@ -50,6 +51,7 @@ function startSimulation() {
     spaceData.spaceY = kmToMeters(parseFloat(document.getElementById("espacoBuscaY").value));
     qtdPeople = document.getElementById("people").value;
     survivalTime = document.getElementById("time").value;
+    detouMaxTime = document.getElementById("time2").value;
     algorithm = eval( document.getElementById("selectOfAlgorithms").value );
 
     var baseDistance = kmToMeters(parseFloat(document.getElementById("baseDistance").value));
@@ -65,9 +67,11 @@ function startSimulation() {
     var nBoats       = parseInt(document.getElementById("safeBoats").value);
 
     // init vehicles
-    boats = initBoats( qtdPeople, 1, shipData);
+    boats = initBoats( qtdPeople, 1, shipData , survivalTime, detouMaxTime);
     helicopters = initVehicle( nHelicopters, "imgHelicopter", vehicleData['helicopter'], basePoint );
     safeBoat    = initVehicle( nBoats, "imgSafeBoat", vehicleData['boat'], basePoint );
+
+    console.log(boats);
 
     // init vehicles data
     var accPosition = basePoint;
@@ -217,11 +221,12 @@ function updateAll(){
     }
 
     // contagem de pessoas salvas
-    countPeopleSave();
-    if(die(timestampSeconds)) {
-        alterStatus('Tempo de vida esgotado','red');
-        stop();
+    var p = countPeopleSave();
+    if(p === qtdPeople){
+        alterStatus('Resgate Completado', 'green')
     }
+    // verificação de mortos
+    die(timestampSeconds);
 
     update( boats, [].concat( helicopters, safeBoat ), shipData ); // draw
 }
@@ -238,16 +243,33 @@ function startShip(opacity){
 }
 
 function countPeopleSave() {
+    var lives =0;
+    var die = 0;
+    for(var i=0; i< boats.length; i++){
+        if(boats[i].status === 'vivo') lives = lives+1;
+        if(boats[i].status === 'morto') die = die+1;
+        
+    }
     peopleSave = qtdPeople - boats.length;
     document.getElementById('peopleSave').innerHTML = peopleSave;
+    document.getElementById('peopleDie').innerHTML = die;
+    document.getElementById('peopleLive').innerHTML = lives;
+    return peopleSave;
 }
 
 function die(seconds) {
-    if(minutesToSeconds(survivalTime) <= seconds) return true;
-    else return false;
+    for(var i=0; i<boats.length; i++) {
+        if (minutesToSeconds(boats[i].surviveTime) < seconds) {
+            boats[i].status = 'morto';
+        }
+    }
 }
 
 function alterStatus(status,color){
     document.getElementById('status').innerHTML = status;
     document.getElementById('status').style.color = color;
 }
+
+
+
+
