@@ -54,11 +54,11 @@ function drawVehicle(vehicle, index){
 
 
 // Inicialização
-function initBoats(num, boatLimit, ship, surviveTime, maxDetouTime) {
+function initBoats(num, boatLimit, ship, surviveTime, maxDetourTime) {
     var boats = new Array();
-    var pos = toPosition(ship.width,ship.height,spaceData);
-    var w = pos.x;
-    var h = pos.y;
+    //var pos = toPosition(ship.width,ship.height,spaceData);
+    var w = ship.width; // pos.x;
+    var h = ship.height;// pos.y;
     for(var i=0; i < num/boatLimit; i++){
         var x = random( (spaceData.spaceX/2.0 -w )-2, spaceData.spaceX/2.0 +w +2 );
         var y = random( 20, 20+h+10 );
@@ -71,7 +71,7 @@ function initBoats(num, boatLimit, ship, surviveTime, maxDetouTime) {
         boats[i].people = boatLimit;
         boats[i].posX = x;
         boats[i].posY = y;
-        boats[i].surviveTime = calcMaxTime(surviveTime,maxDetouTime);
+        boats[i].surviveTime = calcMaxTime(surviveTime,maxDetourTime);
         boats[i].status = 'vivo';
     }
     return boats;

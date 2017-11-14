@@ -113,6 +113,7 @@ function moveVehicle( vehicle, speed, posX, posY ){
     vehicle.posY = newPos.y;
 }
 
+
 function updateBoat( boat ){
     if ( timestampSeconds%peopleChangeTime === 0 ){
         boat.angle = realRandom( 90-peopleAngle, 90+peopleAngle );
@@ -305,7 +306,3 @@ function boatsInMap(boats){
         return true;
     }
 }
-
-
-
-
