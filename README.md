@@ -7,8 +7,8 @@ Descreva em uma parágrafo do que se trata seu projeto.
 Busca e análise de métodos para resgate de pessoas naugrafadas em relação ao número de pessoas
 salvas utilizando simulações com base em correnteza e tempo de sobrevivência das pessoas.
 
- 
-Quais áreas de conhecimento seu trabalho aborda? Alguma destas áreas está no CNPQ? 
+
+Quais áreas de conhecimento seu trabalho aborda? Alguma destas áreas está no CNPQ?
 + Modelos analíticos e de Simulação (simulação)
 + Análise de Algoritmos e Complexidade de Computação (Análise de Algoritmos)
 
@@ -21,7 +21,7 @@ método que, com base nas possíveis variáveis, possa predizer a maior taxa de 
 
 
 Definições do Experimento
-+ Distribuir pessoas em locais próximos ao navio, simulando a fuga das pessoas. Após isso, 
++ Distribuir pessoas em locais próximos ao navio, simulando a fuga das pessoas. Após isso,
 com base no tempo, as pessoas irão começar a se mover em uma direção condizente com correnteza.
 
 Quais variáveis você pretende mensurar (pelo menos duas de entrada e de uma saída com variação no tempo) em seu projeto? Por que? Quais tipos de informação elas representarão?
@@ -44,14 +44,14 @@ Quais variáveis você pretende mensurar (pelo menos duas de entrada e de uma sa
   - Número de sobreviventes encontrados
   - Número de sobreviventes resgatados  (resgate: somente pessoas vivas caracterizam resgate)
 
-O que seu projeto analisará? Que hipóteses ele busca verificar? 
+O que seu projeto analisará? Que hipóteses ele busca verificar?
 + Analisará a taxa de resgate/sobrevivência de pessoas em relação as variáveis e estratégias.
 + Algumas estratégias podem ser melhores em determinados cenários.
 
 Qual o público-alvo que utilizará seu sistema?
 + Centrais de resgate de naufrágios.
 
-Como você identificará seu modelo real? Será um modelo físico ou digital? 
+Como você identificará seu modelo real? Será um modelo físico ou digital?
 + Um modelo digital que irá buscar o máximo de constantes reais em várias localizações críticas no mundo.
 
 #### Resgate, Estratégias, Naufrágio
@@ -66,7 +66,3 @@ Como você identificará seu modelo real? Será um modelo físico ou digital?
 + [ ] Identificação das variáveis utilizadas e equacionamentos
 + [ ] Demosntração do modelo computacional, identificando também as variáveis de entrada e saída, tal como os agentes envolvidos e o objetivo do projeto
 + [ ] Uma comparação indicando as semelhanças e diferenças com o mundo real/teórico/dados obtidos
-
-
-
-
