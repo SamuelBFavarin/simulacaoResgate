@@ -242,8 +242,9 @@ function updateAll(){
 
     // contagem de pessoas salvas
     var p = countPeopleResgat();
-    if(p === qtdPeople){
-        alterStatus('Resgate Completado', 'green')
+    if(p === 0){
+        alterStatus('Resgate Completado', 'green');
+        stop();
     }
     // verificação de mortos
     die(timestampSeconds);
