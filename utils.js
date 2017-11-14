@@ -64,17 +64,17 @@ function toPosition( x,y, spaceData ){
     };
 }
 
-function calcMaxTime(timeSurvive, detouMax){
+function calcMaxTime(timeSurvive, detourMax){
     // gera numero para sirtear de o detour vai ser positivo ou negativo
     var someNumber = Math.floor((Math.random() * 100) + 0);
     // random para receber a diferela
-    var detour = Math.floor((Math.random() * detouMax) + 0);
+    var detour = (Math.random() * detourMax * 2.0) - detourMax;
 
     // se for par, coloca detour negativo
     // utilizado apenas para gerar uma aleatoridade na criação do desvio
-    if(someNumber % 2 === 0){
-        detour = detour * -1;
-    }
+    // if(someNumber % 2 === 0){
+    //     detour = detour * -1;
+    // }
     // retorna o tempo de sobrevivencia calculado
-    return parseInt(timeSurvive) + detour;
+    return parseFloat(timeSurvive) + detour;
 }

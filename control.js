@@ -250,8 +250,8 @@ function updateAll(){
         stop();
     }
 
-    if(!boatsInMap(boats)){
-        alterStatus('Pessoas fora do espaço de busca', 'red');
+    if(!boatsInMap(boats) && boats.length > 0){
+        alterStatus('Todas as pessoas fora do espaço de busca', 'red');
         stop();
     }
     // verificação de mortos
@@ -295,15 +295,15 @@ function alterStatus(status,color){
 }
 
 function boatsInMap(boats){
-    var peopleOff = 0;
-    for(var i=0; i<boats.length; i++){
-        if(boats[i].posX > spaceData.realX) peopleOff++;
-        else if(boats[i].posX < 0) peopleOff++;
-        else if(boats[i].posY > spaceData.realY) peopleOff++;
-        else if(boats[i].posY < 0) peopleOff++;
+    var peopleOutside = 0;
+    for(var i = 0; i < boats.length; i++){
+        if(boats[i].posX > spaceData.spaceX) peopleOutside++;
+        else if(boats[i].posX < 0) peopleOutside++;
+        else if(boats[i].posY > spaceData.spaceY) peopleOutside++;
+        else if(boats[i].posY < 0) peopleOutside++;
     }
 
-    if(peopleOff >= boats.length) {
+    if(peopleOutside >= boats.length) {
         return false;
     }else{
         return true;
