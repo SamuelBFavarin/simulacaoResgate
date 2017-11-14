@@ -33,6 +33,8 @@ var peopleSave;
 var survivalTime;
 var detouMaxTime;
 
+var preparationTeamTime;
+
 
 $.getJSON('vehicleData.json', function(data){
     vehicleData = data;
@@ -40,7 +42,7 @@ $.getJSON('vehicleData.json', function(data){
 
 // instancia dados da simulação
 function startSimulation() {
-    opacity = 1;
+    opacity = 0.7;
     peopleSave = 0;
     alterStatus('Buscando Sobreviventes','green');
     clearSimulation();
@@ -52,6 +54,7 @@ function startSimulation() {
     qtdPeople = document.getElementById("people").value;
     survivalTime = document.getElementById("time").value;
     detouMaxTime = document.getElementById("time2").value;
+    preparationTeamTime = document.getElementById("preparationTime").value;
     algorithm = eval( document.getElementById("selectOfAlgorithms").value );
 
     var baseDistance = kmToMeters(parseFloat(document.getElementById("baseDistance").value));
@@ -71,7 +74,6 @@ function startSimulation() {
     helicopters = initVehicle( nHelicopters, "imgHelicopter", vehicleData['helicopter'], basePoint );
     safeBoat    = initVehicle( nBoats, "imgSafeBoat", vehicleData['boat'], basePoint );
 
-    console.log(boats);
 
     // init vehicles data
     var accPosition = basePoint;
@@ -125,95 +127,107 @@ function updateAll(){
 
     boats.forEach( (boat) => { updateBoat(boat) } );
 
-    [].concat(helicopters,safeBoat).forEach(function(vehicle){
-        var distanceToBase = distanceBetween( vehicle.posX, vehicle.posY,  basePoint.x, basePoint.y );
-        var timeUntilBase = distanceToBase / kmHToMetersS( vehicle.speed );
+    // teste já terminou o tempo de preparação da equipe
+    // se terminou, começam a fazer a busca
+    if (minutesToSeconds(preparationTeamTime) <= timestampSeconds) {
+        [].concat(helicopters, safeBoat).forEach(function (vehicle) {
 
-        if ( vehicle.state != 'moving to base' && timeUntilBase >= minutesToSeconds( vehicle.autonomy ) -vehicle.timeMoving ){
-            vehicle.state = 'moving to base';
-            if ( vehicle.goingFor !== undefined ){
-                boats.push( vehicle.goingFor );
-                vehicle.goingFor = undefined;
-            }
-        }
+            var distanceToBase = distanceBetween(vehicle.posX, vehicle.posY, basePoint.x, basePoint.y);
+            var timeUntilBase = distanceToBase / kmHToMetersS(vehicle.speed);
 
-        ++vehicle.timeMoving;
 
-        switch (vehicle.state) {
-            case 'moving to critic area':{
-                moveVehicle( vehicle, kmHToMetersS( vehicle.speed ), spaceData.spaceX/2.0, spaceData.spaceY/2.0 );
-                // if arrived to initial position
-                if ( vehicle.posX == spaceData.spaceX/2.0 && vehicle.posY == spaceData.spaceY/2.0 ){
-                    vehicle.state = 'searching people';
-                }
-            } break;
-
-            case 'searching people':{
-
-                // get the closer seen guy
-                var person = undefined;
-                var closerDistance;
-                for (var i = 0; i < boats.length; ++i){
-                    var boat = boats[i];
-                    var distance = distanceBetween( vehicle.posX, vehicle.posY,  boat.posX, boat.posY );
-                    if ( distance <= vehicle.visionRadius ){
-                        if ( realRandom(0,1) < vehicle.findProbability ){ // if seen
-                            if ( person === undefined || distance < closerDistance ){
-                                person = i;
-                                closerDistance = distance;
-                            }
-                        }
-                    }
-                }
-                if ( person === undefined ){
-                    algorithm.searchMove(vehicle);
-                } else {
-                    vehicle.goingFor = boats[person];
-                    boats.splice( person, 1 );
-                    vehicle.state = 'reaching person';
-                }
-            } break;
-
-            case 'reaching person':{
-                var boat = vehicle.goingFor;
-                updateBoat(boat);
-                moveVehicle( vehicle, kmHToMetersS( searchSpeed ), boat.posX, boat.posY );
-                // if arrived to boat
-                if ( vehicle.posX === boat.posX && vehicle.posY === boat.posY ){
-                    vehicle.state = 'rescue process';
-                    vehicle.stoppedTimer = minutesToSeconds(vehicle.rescueTime);
-                }
-            } break;
-
-            case 'rescue process':{
-                vehicle.stoppedTimer -= 1;
-                if ( vehicle.stoppedTimer <= 0 ){
+            if (vehicle.state != 'moving to base' && timeUntilBase >= minutesToSeconds(vehicle.autonomy) - vehicle.timeMoving) {
+                vehicle.state = 'moving to base';
+                if (vehicle.goingFor !== undefined) {
+                    boats.push(vehicle.goingFor);
                     vehicle.goingFor = undefined;
-                    ++vehicle.peopleCount;
-                    if ( vehicle.peopleCount == vehicle.capacity ){
-                        vehicle.state = 'moving to base';
-                    } else {
+                }
+            }
+
+            ++vehicle.timeMoving;
+
+            switch (vehicle.state) {
+                case 'moving to critic area': {
+                    moveVehicle(vehicle, kmHToMetersS(vehicle.speed), spaceData.spaceX / 2.0, spaceData.spaceY / 2.0);
+                    // if arrived to initial position
+                    if (vehicle.posX == spaceData.spaceX / 2.0 && vehicle.posY == spaceData.spaceY / 2.0) {
                         vehicle.state = 'searching people';
                     }
                 }
-            } break;
+                    break;
 
-            case 'moving to base':{
-                moveVehicle( vehicle, kmHToMetersS( vehicle.speed ), basePoint.x, basePoint.y );
-                // if arrived to base
-                if ( vehicle.posX === basePoint.x && vehicle.posY === basePoint.y ){
-                    vehicle.state = 'stopped';
+                case 'searching people': {
+
+                    // get the closer seen guy
+                    var person = undefined;
+                    var closerDistance;
+                    for (var i = 0; i < boats.length; ++i) {
+                        var boat = boats[i];
+                        var distance = distanceBetween(vehicle.posX, vehicle.posY, boat.posX, boat.posY);
+                        if (distance <= vehicle.visionRadius) {
+                            if (realRandom(0, 1) < vehicle.findProbability) { // if seen
+                                if (person === undefined || distance < closerDistance) {
+                                    person = i;
+                                    closerDistance = distance;
+                                }
+                            }
+                        }
+                    }
+                    if (person === undefined) {
+                        algorithm.searchMove(vehicle);
+                    } else {
+                        vehicle.goingFor = boats[person];
+                        boats.splice(person, 1);
+                        vehicle.state = 'reaching person';
+                    }
                 }
-            } break;
+                    break;
 
-            case 'stopped':{
-                // what?
-                vehicle.timeMoving = 0;
-                vehicle.peopleCount = 0;
-            } break;
-            default:
-        }
-    });
+                case 'reaching person': {
+                    var boat = vehicle.goingFor;
+                    updateBoat(boat);
+                    moveVehicle(vehicle, kmHToMetersS(searchSpeed), boat.posX, boat.posY);
+                    // if arrived to boat
+                    if (vehicle.posX === boat.posX && vehicle.posY === boat.posY) {
+                        vehicle.state = 'rescue process';
+                        vehicle.stoppedTimer = minutesToSeconds(vehicle.rescueTime);
+                    }
+                }
+                    break;
+
+                case 'rescue process': {
+                    vehicle.stoppedTimer -= 1;
+                    if (vehicle.stoppedTimer <= 0) {
+                        vehicle.goingFor = undefined;
+                        ++vehicle.peopleCount;
+                        if (vehicle.peopleCount == vehicle.capacity) {
+                            vehicle.state = 'moving to base';
+                        } else {
+                            vehicle.state = 'searching people';
+                        }
+                    }
+                }
+                    break;
+
+                case 'moving to base': {
+                    moveVehicle(vehicle, kmHToMetersS(vehicle.speed), basePoint.x, basePoint.y);
+                    // if arrived to base
+                    if (vehicle.posX === basePoint.x && vehicle.posY === basePoint.y) {
+                        vehicle.state = 'stopped';
+                    }
+                }
+                    break;
+
+                case 'stopped': {
+                    // what?
+                    vehicle.timeMoving = 0;
+                    vehicle.peopleCount = 0;
+                }
+                    break;
+                default:
+            }
+        });
+    }
 
     opacity = opacity - velocidadeAfundamento;
     if(opacity >=0){
@@ -231,10 +245,6 @@ function updateAll(){
     update( boats, [].concat( helicopters, safeBoat ), shipData ); // draw
 }
 
-function personFound(vehicleID,x,y){
-
-}
-
 function startShip(opacity){
     shipData.width = shipData.image.width;
     shipData.height = shipData.image.height;
@@ -248,7 +258,7 @@ function countPeopleSave() {
     for(var i=0; i< boats.length; i++){
         if(boats[i].status === 'vivo') lives = lives+1;
         if(boats[i].status === 'morto') die = die+1;
-        
+
     }
     peopleSave = qtdPeople - boats.length;
     document.getElementById('peopleSave').innerHTML = peopleSave;
