@@ -2,51 +2,54 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="./third-part/bootstrap-3.3.7.min.css">
+        <script type="text/javascript" src="./third-part/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="./third-part/bootstrap-3.3.7.min.js"></script>
+        <script type="text/javascript" src="./third-part/chart-2.7.1.min.js"></script>
+        <!-- <script type="text/javascript" src="http://www.chartjs.org/dist/2.7.1/Chart.min.js"></script> -->
+        <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
         <title> Simulação de Resgate </title>
     </head>
     <body style="margin-top: 20px">
-    <h2> Projeto</h2>
+    <h2> Simulação de Resgate </h2>
         <div class="col-md-4 col-sm-2">
             <h3>Entrada</h3>
             <div class="form-group">
                 <label for="time">Tempo estimado de sobrevivência das pessoas (minutos):</label>
-                <input type="number" class="form-control" id="time">
+                <input type="number" class="form-control" id="time" value="1440">
             </div>
             <div class="form-group">
                 <label for="time2">Desvio máximo do tempo de sobrevivência (minutos):</label>
-                <input type="number" class="form-control" id="time2">
+                <input type="number" class="form-control" id="time2" value="1440">
             </div>
             <div class="form-group">
                 <label for="people">Quantidade de pessoas:</label>
-                <input type="number" class="form-control" value="value" id="people">
+                <input type="number" class="form-control" id="people" value="120">
             </div>
             <div class="form-group">
                 <label for="helicopters">Quantidade helicópteros:</label>
-                <input type="number" class="form-control" id="helicopters">
+                <input type="number" class="form-control" id="helicopters" value="1">
             </div>
             <div class="form-group">
                 <label for="safeBoats">Quantidade barcos:</label>
-                <input type="number" class="form-control" id="safeBoats">
+                <input type="number" class="form-control" id="safeBoats" value="8">
             </div>
             <div class="form-group">
                 <label for="baseDistance">Distância do ponto inicial (km):</label>
-                <input type="number" class="form-control" id="baseDistance" value="10">
+                <input type="number" class="form-control" id="baseDistance" value="1">
             </div>
             <div class="form-group">
                 <label for="preparationTime">Tempo de praparo da equipe (minutos):</label>
-                <input type="number" class="form-control" id="preparationTime">
+                <input type="number" class="form-control" id="preparationTime" value="60">
             </div>
             <div class="form-group">
                 <label for="velocidade">Velocidade de atualização (tempo em ms de cada segundo):</label>
-                <input type="number" class="form-control" id="velocidade" value="33" />
+                <input type="number" class="form-control" id="velocidade" value="15" />
             </div>
             <div class="form-group">
                 <label>Espaço de busca (km):</label><br />
-                <input type="number" class="form-control col-sm-6" style="width: 50%" id="espacoBuscaX" value="0.5" />
-                <input type="number" class="form-control col-sm-6" style="width: 50%" id="espacoBuscaY" value="0.5" />
+                <input type="number" class="form-control col-sm-6" style="width: 50%" id="espacoBuscaX" value="0.4" />
+                <input type="number" class="form-control col-sm-6" style="width: 50%" id="espacoBuscaY" value="1.0" />
                 <br style="clear: both" />
             </div>
         </div>
@@ -72,14 +75,16 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-2">
-            <h3>Saida</h3>
+            <h3>Saída</h3>
             <label for="people">Tempo percorrido:</label>
             <span id="hora">00h</span><span id="minuto">00m</span><span id="segundo">00s</span><br>
             <label for="peopleSave">Quantidade de pessoas resgatadas vivas: <span id="peopleSave"> 00 </span> </label> <br>
             <label for="peopleDie">Quantidade de pessoas resgatadas mortas: <span id="peopleDie"> 00 </span> </label> <br>
             <label for="peopleDisappeared">Quantidade de pessoas desaparecidas: <span id="peopleDisappeared"> 00 </span> </label> <br>
             <label> Status: <span id="status"> Não Iniciado </span></label>
+            <canvas id="chart" width="300" height="300"></canvas>
         </div>
+        <script type="text/javascript" src="evolution-chart.js"></script>
         <script type="text/javascript" src="utils.js"></script>
         <script type="text/javascript" src="interface.js"></script>
         <script type="text/javascript" src="cronometro.js"></script>

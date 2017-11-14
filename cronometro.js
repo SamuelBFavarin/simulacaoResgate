@@ -10,7 +10,7 @@ function setTime(h,m,s){
 
 function start() {
 
-	speed = document.getElementById("velocidade").value;
+	speed = parseInt(document.getElementById("velocidade").value);
 
     window.clearInterval(intervalo);
 	var ms = 0;
@@ -33,5 +33,5 @@ function stop(){
 	window.clearInterval(intervalo);
     resgatPeopleLife = 0;
     resgatPeopleDie = 0;
-	
+
 }

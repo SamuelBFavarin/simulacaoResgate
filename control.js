@@ -243,6 +243,8 @@ function updateAll(){
         startShip(opacity);
     }
 
+    addPoint( timestampSeconds, parseInt(document.getElementById('peopleSave').innerHTML) );
+
     // contagem de pessoas salvas
     var p = countPeopleResgat();
     if(p === 0){
