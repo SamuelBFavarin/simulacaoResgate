@@ -35,6 +35,10 @@ var detouMaxTime;
 
 var preparationTeamTime;
 
+var resgatPeopleLife = 0;
+var resgatPeopleDie = 0;
+var disappearedPeople = 0;
+
 
 $.getJSON('vehicleData.json', function(data){
     vehicleData = data;
@@ -42,7 +46,7 @@ $.getJSON('vehicleData.json', function(data){
 
 // instancia dados da simulação
 function startSimulation() {
-    opacity = 0.7;
+    opacity = 0.5;
     peopleSave = 0;
     alterStatus('Buscando Sobreviventes','green');
     clearSimulation();
@@ -135,7 +139,6 @@ function updateAll(){
             var distanceToBase = distanceBetween(vehicle.posX, vehicle.posY, basePoint.x, basePoint.y);
             var timeUntilBase = distanceToBase / kmHToMetersS(vehicle.speed);
 
-
             if (vehicle.state != 'moving to base' && timeUntilBase >= minutesToSeconds(vehicle.autonomy) - vehicle.timeMoving) {
                 vehicle.state = 'moving to base';
                 if (vehicle.goingFor !== undefined) {
@@ -197,7 +200,9 @@ function updateAll(){
 
                 case 'rescue process': {
                     vehicle.stoppedTimer -= 1;
+                    //console.log(vehicle.goingFor);
                     if (vehicle.stoppedTimer <= 0) {
+                        countPeopleResgat(vehicle.goingFor.status);
                         vehicle.goingFor = undefined;
                         ++vehicle.peopleCount;
                         if (vehicle.peopleCount == vehicle.capacity) {
@@ -222,6 +227,7 @@ function updateAll(){
                     // what?
                     vehicle.timeMoving = 0;
                     vehicle.peopleCount = 0;
+                    vehicle.state = 'moving to critic area';
                 }
                     break;
                 default:
@@ -235,7 +241,7 @@ function updateAll(){
     }
 
     // contagem de pessoas salvas
-    var p = countPeopleSave();
+    var p = countPeopleResgat();
     if(p === qtdPeople){
         alterStatus('Resgate Completado', 'green')
     }
@@ -252,19 +258,19 @@ function startShip(opacity){
     shipData.opacity = opacity;
 }
 
-function countPeopleSave() {
-    var lives =0;
-    var die = 0;
-    for(var i=0; i< boats.length; i++){
-        if(boats[i].status === 'vivo') lives = lives+1;
-        if(boats[i].status === 'morto') die = die+1;
+function countPeopleResgat(status) {
 
-    }
-    peopleSave = qtdPeople - boats.length;
-    document.getElementById('peopleSave').innerHTML = peopleSave;
-    document.getElementById('peopleDie').innerHTML = die;
-    document.getElementById('peopleLive').innerHTML = lives;
-    return peopleSave;
+
+
+    if(status === 'morto'){resgatPeopleDie++;}
+    if(status === 'vivo'){resgatPeopleLife++;}
+
+    //peopleDisappeared = qtdPeople - boats.length;
+    peopleDisappeared = qtdPeople - resgatPeopleDie - resgatPeopleLife;
+    document.getElementById('peopleSave').innerHTML = resgatPeopleLife;
+    document.getElementById('peopleDie').innerHTML = resgatPeopleDie;
+    document.getElementById('peopleDisappeared').innerHTML = peopleDisappeared;
+    return peopleDisappeared;
 }
 
 function die(seconds) {
