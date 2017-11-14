@@ -73,6 +73,7 @@ function startSimulation() {
     var accPosition = basePoint;
     [].concat(helicopters,safeBoat).forEach(function(vehicle){
         vehicle.state = 'moving to critic area';
+        vehicle.timeMoving = 0;
         vehicle.posX = accPosition.x;
         vehicle.posY = accPosition.y;
         accPosition = moveTo( accPosition.x, accPosition.y, baseAngle, Math.max(vehicle.width,vehicle.height) );
@@ -120,8 +121,20 @@ function updateAll(){
     boats.forEach( (boat) => { updateBoat(boat) } );
 
     [].concat(helicopters,safeBoat).forEach(function(vehicle){
-        switch (vehicle.state) {
+        var distanceToBase = distanceBetween( vehicle.posX, vehicle.posY,  basePoint.x, basePoint.y );
+        var timeUntilBase = distanceToBase / kmHToMetersS( vehicle.speed );
 
+        if ( vehicle.state != 'moving to base' && timeUntilBase >= minutesToSeconds( vehicle.autonomy ) -vehicle.timeMoving ){
+            vehicle.state = 'moving to base';
+            if ( vehicle.goingFor !== undefined ){
+                boats.push( vehicle.goingFor );
+                vehicle.goingFor = undefined;
+            }
+        }
+
+        ++vehicle.timeMoving;
+
+        switch (vehicle.state) {
             case 'moving to critic area':{
                 moveVehicle( vehicle, kmHToMetersS( vehicle.speed ), spaceData.spaceX/2.0, spaceData.spaceY/2.0 );
                 // if arrived to initial position

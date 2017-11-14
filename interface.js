@@ -91,6 +91,7 @@ function initVehicle(num, idImg, vehicle, pos){
         vehicles[i].speed   = vehicle['speed'];
         vehicles[i].width   = vehicle['width'];
         vehicles[i].height  = vehicle['length'];
+        vehicles[i].autonomy  = vehicle['autonomy'];
         vehicles[i].rescueTime  = vehicle['rescueTime'];
         vehicles[i].findProbability  = vehicle['findProbability'];
         vehicles[i].visionRadius  = vehicle['visionRadius'];
