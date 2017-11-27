@@ -7,6 +7,12 @@ https://comum.rcaap.pt/handle/10400.26/15041
 Gestão Operacional de Salvamento Aquático
 https://repositorio-aberto.up.pt/bitstream/10216/79119/2/35188.pdf
 
+An Adaptation of an Algorithm of Search and Rescue Operations to Ship Manoeuvrability
+http://www.transnav.eu/Article_An_Adaptation_of_an_Algorithm_Kasyk,34,582.html
+
+SAROPS wikipedia:
+https://en.wikipedia.org/wiki/Search_and_Rescue_Optimal_Planning_System
+
 Noticias:
 http://agenciabrasil.ebc.com.br/geral/noticia/2017-08/acidentes-com-embarcacoes-no-brasil-aumentam-1263-em-2017
 http://agenciabrasil.ebc.com.br/geral/noticia/2017-08/encontrado-mais-um-corpo-de-vitima-de-acidente-maritimo-na-bahia
