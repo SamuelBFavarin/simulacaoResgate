@@ -1,6 +1,9 @@
 
 # Análise de estratégias de resgate de pessoas em naufrágios
 
+## Link do artigo no Google drive:
+https://docs.google.com/document/d/14rn3nJ8szdAuismSr4U_NcxJgr3GQIIdRGeLYETPCUA/edit
+
 ## Pré-Projeto
 Descreva em uma parágrafo do que se trata seu projeto.
 
@@ -60,9 +63,9 @@ Como você identificará seu modelo real? Será um modelo físico ou digital?
 
 # Entrega M2 07/11/17
 
-+ [ ] Código ou link de onde está postado
-+ [ ] Apresentação Slides
-+ [ ] Referências para as informações teóricas, ilustras e/ou detalhadas;
-+ [ ] Identificação das variáveis utilizadas e equacionamentos
-+ [ ] Demosntração do modelo computacional, identificando também as variáveis de entrada e saída, tal como os agentes envolvidos e o objetivo do projeto
-+ [ ] Uma comparação indicando as semelhanças e diferenças com o mundo real/teórico/dados obtidos
++ [x] Código ou link de onde está postado
++ [x] Apresentação Slides
++ [x] Referências para as informações teóricas, ilustras e/ou detalhadas;
++ [x] Identificação das variáveis utilizadas e equacionamentos
++ [x] Demosntração do modelo computacional, identificando também as variáveis de entrada e saída, tal como os agentes envolvidos e o objetivo do projeto
++ [x] Uma comparação indicando as semelhanças e diferenças com o mundo real/teórico/dados obtidos
