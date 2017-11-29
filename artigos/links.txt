@@ -1,10 +1,10 @@
 Coordinated sea rescue system based on unmanned air vehicles and surface vessels:
 http://ieeexplore.ieee.org/document/6003509
 
-DeteÁ„o de n·ufragos com sistemas sonar em UUVís
+Dete√ß√£o de n√°ufragos com sistemas sonar em UUV‚Äôs
 https://comum.rcaap.pt/handle/10400.26/15041
 
-Gest„o Operacional de Salvamento Aqu·tico
+Gest√£o Operacional de Salvamento Aqu√°tico
 https://repositorio-aberto.up.pt/bitstream/10216/79119/2/35188.pdf
 
 An Adaptation of an Algorithm of Search and Rescue Operations to Ship Manoeuvrability
@@ -12,6 +12,12 @@ http://www.transnav.eu/Article_An_Adaptation_of_an_Algorithm_Kasyk,34,582.html
 
 SAROPS wikipedia:
 https://en.wikipedia.org/wiki/Search_and_Rescue_Optimal_Planning_System
+
+SAR na Marinha do Brasil
+https://www.marinha.mil.br/comcontram/?q=sar
+
+Sistemas de rastreamento utilizados pela Marinha do Brasil
+https://www.marinha.mil.br/comcontram/?q=PREPS
 
 Noticias:
 http://agenciabrasil.ebc.com.br/geral/noticia/2017-08/acidentes-com-embarcacoes-no-brasil-aumentam-1263-em-2017
