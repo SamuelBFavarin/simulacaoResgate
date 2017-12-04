@@ -28,6 +28,9 @@ http://www2.camara.leg.br/legin/fed/decret/1990/decreto-99165-12-marco-1990-3285
 Sistema GMDSS
 https://www.marinha.mil.br/salvamarbrasil/Sistema/gmdss-global-maritime-distress-and-safety-system
 
+On the Relative Importance of Motion-Related Contributions to the SAR Imaging Mechanism of Ocean Surface Waves:
+http://ieeexplore.ieee.org/document/4072558/
+
 Noticias:
 http://agenciabrasil.ebc.com.br/geral/noticia/2017-08/acidentes-com-embarcacoes-no-brasil-aumentam-1263-em-2017
 http://agenciabrasil.ebc.com.br/geral/noticia/2017-08/encontrado-mais-um-corpo-de-vitima-de-acidente-maritimo-na-bahia
