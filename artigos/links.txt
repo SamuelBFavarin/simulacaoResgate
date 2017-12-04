@@ -1,3 +1,6 @@
+Definição SAR
+https://en.oxforddictionaries.com/definition/sar
+
 Coordinated sea rescue system based on unmanned air vehicles and surface vessels:
 http://ieeexplore.ieee.org/document/6003509
 
