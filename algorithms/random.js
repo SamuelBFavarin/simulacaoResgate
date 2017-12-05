@@ -3,8 +3,9 @@ var randomAlgorithm = {
 
     searchMove: function(vehicle){
         // new position
-        if ( vehicle.timeSearching%60 === 0 ){ // one minute for searching time
+        if ( vehicle.timeSearching%60 === 0 || vehicle.searchState === 'started' ){ // one minute for searching time
             vehicle.angle = realRandom( 0, 360 );
+            vehicle.searchState = 'randomly searching';
         }
         ++vehicle.timeSearching;
         // out of the search space

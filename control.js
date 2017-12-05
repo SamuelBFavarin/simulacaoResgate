@@ -157,6 +157,7 @@ function updateAll(){
                 if (vehicle.posX == spaceData.spaceX / 2.0 && vehicle.posY == spaceData.spaceY / 2.0) {
                     vehicle.state = 'searching people';
                     vehicle.timeSearching = 0;
+                    vehicle.searchState = 'started';
                     if (document.getElementById('status').innerHTML === 'Em deslocamento para área crítica'){
                         alterStatus('Buscando pessoas', 'green');
                     }
