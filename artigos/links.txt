@@ -31,6 +31,9 @@ https://www.marinha.mil.br/salvamarbrasil/Sistema/gmdss-global-maritime-distress
 On the Relative Importance of Motion-Related Contributions to the SAR Imaging Mechanism of Ocean Surface Waves:
 http://ieeexplore.ieee.org/document/4072558/
 
+SEARCH AND RESCUE MONTE CARLO SIMULATION:
+http://oai.dtic.mil/oai/oai?verb=getRecord&metadataPrefix=html&identifier=ADA169003
+
 Noticias:
 http://agenciabrasil.ebc.com.br/geral/noticia/2017-08/acidentes-com-embarcacoes-no-brasil-aumentam-1263-em-2017
 http://agenciabrasil.ebc.com.br/geral/noticia/2017-08/encontrado-mais-um-corpo-de-vitima-de-acidente-maritimo-na-bahia
