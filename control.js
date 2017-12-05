@@ -36,6 +36,7 @@ var detouMaxTime;
 var preparationTeamTime;
 
 var resgatPeopleLife = 0;
+var resgatPeopleBeingSaved = 0;
 var resgatPeopleDie = 0;
 var disappearedPeople = 0;
 
@@ -155,6 +156,7 @@ function updateAll(){
                 // if arrived to initial position
                 if (vehicle.posX == spaceData.spaceX / 2.0 && vehicle.posY == spaceData.spaceY / 2.0) {
                     vehicle.state = 'searching people';
+                    vehicle.timeSearching = 0;
                     if (document.getElementById('status').innerHTML === 'Em deslocamento para área crítica'){
                         alterStatus('Buscando pessoas', 'green');
                     }
@@ -183,6 +185,7 @@ function updateAll(){
                 } else {
                     vehicle.goingFor = boats[person];
                     boats.splice(person, 1);
+                    ++resgatPeopleBeingSaved;
                     vehicle.state = 'reaching person';
                 }
             } break;
@@ -205,6 +208,7 @@ function updateAll(){
                     countPeopleResgat(vehicle.goingFor.status);
                     vehicle.goingFor = undefined;
                     ++vehicle.peopleCount;
+                    --resgatPeopleBeingSaved;
                     if (vehicle.peopleCount == vehicle.capacity) {
                         vehicle.state = 'moving to base';
                     } else {
@@ -252,7 +256,7 @@ function updateAll(){
         stop();
     }
 
-    if(!boatsInMap(boats) && boats.length > 0){
+    if(!boatsInMap(boats) && boats.length > 0 && resgatPeopleBeingSaved == 0){
         alterStatus('Todas as pessoas fora do espaço de busca', 'red');
         stop();
     }
@@ -275,11 +279,15 @@ function countPeopleResgat(status) {
     if(status === 'vivo'){resgatPeopleLife++;}
 
     //peopleDisappeared = qtdPeople - boats.length;
-    peopleDisappeared = qtdPeople - resgatPeopleDie - resgatPeopleLife;
+    peopleDisappeared = qtdPeople - resgatPeopleDie - resgatPeopleLife - resgatPeopleBeingSaved;
     document.getElementById('peopleSave').innerHTML = resgatPeopleLife;
     document.getElementById('peopleDie').innerHTML = resgatPeopleDie;
     document.getElementById('peopleDisappeared').innerHTML = peopleDisappeared;
-    return peopleDisappeared;
+
+    document.getElementById('peopleBeingSaved').innerHTML = resgatPeopleBeingSaved;
+
+
+    return peopleDisappeared + resgatPeopleBeingSaved;
 }
 
 function die(seconds) {

@@ -1,15 +1,12 @@
 
 var randomAlgorithm = {
 
-    test: function(){
-        console.log('uhul');
-    },
-
     searchMove: function(vehicle){
         // new position
-        if ( vehicle.angle == undefined || timestampSeconds%60 === 0 ){ // one minute for direction
+        if ( vehicle.timeSearching%60 === 0 ){ // one minute for searching time
             vehicle.angle = realRandom( 0, 360 );
         }
+        ++vehicle.timeSearching;
         // out of the search space
         var x = vehicle.posX;
         var y = vehicle.posY;
