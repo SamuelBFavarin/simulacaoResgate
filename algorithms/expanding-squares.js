@@ -1,7 +1,11 @@
 
-var randomAlgorithm = function(){
+var expandingSquaresAlgorithm = function(){
+
+    var countVehicles = 0;
 
     this.generateInitialTarget = function(vehicle){
+        vehicle.index = countVehicles;
+        ++countVehicles;
         return {
             x: spaceData.spaceX / 2.0,
             y: spaceData.spaceY / 2.0

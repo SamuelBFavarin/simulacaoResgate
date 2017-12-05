@@ -60,7 +60,7 @@ function startSimulation() {
     survivalTime = document.getElementById("time").value;
     detouMaxTime = document.getElementById("time2").value;
     preparationTeamTime = parseFloat(document.getElementById("preparationTime").value);
-    algorithm = eval( document.getElementById("selectOfAlgorithms").value );
+    algorithm = eval( document.getElementById("selectOfAlgorithms").value + '()' );
 
     var baseDistance = kmToMeters(parseFloat(document.getElementById("baseDistance").value));
     var baseAngle = random( 0, 360 );
@@ -152,9 +152,13 @@ function updateAll(){
 
         switch (vehicle.state) {
             case 'moving to critic area': {
-                moveVehicle(vehicle, kmHToMetersS(vehicle.speed), spaceData.spaceX / 2.0, spaceData.spaceY / 2.0);
-                // if arrived to initial position
-                if (vehicle.posX == spaceData.spaceX / 2.0 && vehicle.posY == spaceData.spaceY / 2.0) {
+                if (vehicle.initialTarget === undefined){
+                    vehicle.initialTarget = algorithm.generateInitialTarget( vehicle );
+                }
+                const initialTarget = vehicle.initialTarget;
+                moveVehicle(vehicle, kmHToMetersS(vehicle.speed), initialTarget.x, initialTarget.y);
+                // if arrived to initial target
+                if (vehicle.posX == initialTarget.x && initialTarget.y) {
                     vehicle.state = 'searching people';
                     vehicle.timeSearching = 0;
                     vehicle.searchState = 'started';
@@ -234,6 +238,7 @@ function updateAll(){
                     vehicle.timeMoving = 0;
                     vehicle.peopleCount = 0;
                     vehicle.state = 'moving to critic area';
+                    vehicle.initialTarget = undefined;
                     if (document.getElementById('status').innerHTML === 'Em preparação'){
                         alterStatus('Em deslocamento para área crítica','orange');
                     }
