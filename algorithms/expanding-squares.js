@@ -42,13 +42,15 @@ var expandingSquaresAlgorithm = function(){
             vehicle.step = 1;
             vehicle.angle = 0;
             vehicle.counter = 0;
+            vehicle.algorithmAngle = 0;
             vehicle.S = 10;//vehicle.visionRadius;
             vehicle.searchState = 'searching';
         }
         if ( vehicle.movingTo === undefined
             || Math.abs(vehicle.posX - vehicle.movingTo.x) < 1 && Math.abs(vehicle.posY - vehicle.movingTo.y) < 1 ){
             if ( vehicle.movingTo !== undefined ){
-                vehicle.angle = (vehicle.angle+90)%360;
+                vehicle.algorithmAngle = (vehicle.algorithmAngle + 90)%360;
+                vehicle.angle = vehicle.algorithmAngle;
                 if ( vehicle.counter%2 === 0 ){
                     ++vehicle.step;
                 }
