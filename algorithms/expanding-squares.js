@@ -1,9 +1,9 @@
 
 var expandingSquaresAlgorithm = function(){
 
-    const nVeiculos = helicopters.length + safeBoat.length;
+    const nVehicles = helicopters.length + safeBoat.length;
 
-    const divisionSize = Math.ceil(Math.sqrt(nVeiculos));
+    const divisionSize = Math.ceil(Math.sqrt(nVehicles));
 
     const subAreaSizeX = spaceData.spaceX / divisionSize;
     const subAreaSizeY = spaceData.spaceY / divisionSize;
@@ -26,6 +26,8 @@ var expandingSquaresAlgorithm = function(){
 
         vehicle.subAreaI = i;
         vehicle.subAreaJ = j;
+        vehicle.movingTo = undefined;
+        vehicle.searchState = 'started';
 
         const center = calcSubAreaCenter( i, j );
         ++j;
@@ -76,26 +78,9 @@ var expandingSquaresAlgorithm = function(){
                 crashX = true;
             }
             if ( crashX && crashY ){
-                if ( i < divisionSize ){
-                    console.log('('+vehicle.subAreaI+';'+vehicle.subAreaJ+'): Changing area -> ('+i+';'+j+')');
-                    vehicle.subAreaI = i;
-                    vehicle.subAreaJ = j;
-                    vehicle.searchState = 'started';
-                    vehicle.state = 'moving to critic area';
-                    vehicle.movingTo = undefined;
-                    vehicle.initialTarget = calcSubAreaCenter(i,j);
-                    ++j;
-                    if ( j === divisionSize ){
-                        ++i;
-                        j = 0;
-                    }
-                } else {
-                    // vehicle.state = 'moving to base';
-                    // vehicle.searchState = 'started';
-                    // vehicle.movingTo = basePoint;
-                    vehicle.initialTarget = this.generateInitialTarget( vehicle );
-                    vehicle.state = 'moving to critic area';
-                }
+                vehicle.state = 'moving to critic area';
+                vehicle.initialTarget = this.generateInitialTarget( vehicle );
+                console.log('('+vehicle.subAreaI+';'+vehicle.subAreaJ+'): Changing area -> ('+i+';'+j+')');
                 return;
             }
         }
