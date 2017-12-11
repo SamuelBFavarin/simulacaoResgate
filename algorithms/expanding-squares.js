@@ -18,13 +18,14 @@ var expandingSquaresAlgorithm = function(){
     var i = 0, j = 0;
     this.generateInitialTarget = function(vehicle){
 
-        vehicle.subAreaI = i;
-        vehicle.subAreaJ = j;
 
         if ( i === divisionSize ){
-            vehicle.disabled = true;
-            return basePoint;
+            i = 0;
+            j = 0;
         }
+
+        vehicle.subAreaI = i;
+        vehicle.subAreaJ = j;
 
         const center = calcSubAreaCenter( i, j );
         ++j;
@@ -37,9 +38,6 @@ var expandingSquaresAlgorithm = function(){
     };
 
     this.searchMove = function(vehicle){
-        if ( vehicle.disabled ){
-            return;
-        }
         if ( vehicle.searchState === 'started' ){
             vehicle.step = 1;
             vehicle.angle = 0;
@@ -48,14 +46,14 @@ var expandingSquaresAlgorithm = function(){
             vehicle.searchState = 'searching';
         }
         if ( vehicle.movingTo === undefined
-            || vehicle.posX === vehicle.movingTo.x && vehicle.posY === vehicle.movingTo.y ){
+            || Math.abs(vehicle.posX - vehicle.movingTo.x) < 1 && Math.abs(vehicle.posY - vehicle.movingTo.y) < 1 ){
             if ( vehicle.movingTo !== undefined ){
                 vehicle.angle = (vehicle.angle+90)%360;
                 if ( vehicle.counter%2 === 0 ){
-                    vehicle.step++;
+                    ++vehicle.step;
                 }
             }
-            vehicle.counter++;
+            ++vehicle.counter;
             vehicle.movingTo = moveTo( vehicle.posX, vehicle.posY, vehicle.angle, vehicle.step * vehicle.S );
 
             var crashY = false, crashX = false;
@@ -76,8 +74,8 @@ var expandingSquaresAlgorithm = function(){
                 crashX = true;
             }
             if ( crashX && crashY ){
-                console.log( i+', '+j );
                 if ( i < divisionSize ){
+                    console.log('('+vehicle.subAreaI+';'+vehicle.subAreaJ+'): Changing area -> ('+i+';'+j+')');
                     vehicle.subAreaI = i;
                     vehicle.subAreaJ = j;
                     vehicle.searchState = 'started';
@@ -90,8 +88,11 @@ var expandingSquaresAlgorithm = function(){
                         j = 0;
                     }
                 } else {
-                    vehicle.state = 'moving to base';
-                    vehicle.movingTo = basePoint;
+                    // vehicle.state = 'moving to base';
+                    // vehicle.searchState = 'started';
+                    // vehicle.movingTo = basePoint;
+                    vehicle.initialTarget = this.generateInitialTarget( vehicle );
+                    vehicle.state = 'moving to critic area';
                 }
                 return;
             }
