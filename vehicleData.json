@@ -36,7 +36,7 @@
         "height": 10,
         "autonomy": 720,
         "findProbability": 0.9,
-        "visionRadius":  200,
+        "visionRadius":  50,
         "rescueTime": 6
     }
 }

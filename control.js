@@ -60,7 +60,6 @@ function startSimulation() {
     survivalTime = document.getElementById("time").value;
     detouMaxTime = document.getElementById("time2").value;
     preparationTeamTime = parseFloat(document.getElementById("preparationTime").value);
-    algorithm = eval( document.getElementById("selectOfAlgorithms").value + '()' );
 
     var baseDistance = kmToMeters(parseFloat(document.getElementById("baseDistance").value));
     var baseAngle = random( 0, 360 );
@@ -79,6 +78,7 @@ function startSimulation() {
     helicopters = initVehicle( nHelicopters, "imgHelicopter", vehicleData['helicopter'], basePoint );
     safeBoat    = initVehicle( nBoats, "imgSafeBoat", vehicleData['boat'], basePoint );
 
+    algorithm = eval( document.getElementById("selectOfAlgorithms").value + '()' );
 
     // init vehicles data
     var accPosition = basePoint;
@@ -143,6 +143,7 @@ function updateAll(){
             if (vehicle.goingFor !== undefined) {
                 boats.push(vehicle.goingFor);
                 vehicle.goingFor = undefined;
+                --resgatPeopleBeingSaved;
             }
         }
 

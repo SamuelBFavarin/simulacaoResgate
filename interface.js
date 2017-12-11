@@ -86,7 +86,7 @@ function estaNoNavio(x,w) {
 
 
 function initVehicle(num, idImg, vehicle, pos){
-    var vehicles = new Array();
+    var vehicles = [];
     for(var i=0; i<num; i++){
         vehicles[i] = {};
         vehicles[i].posX    = pos.x;
