@@ -1,7 +1,4 @@
 
-
-var points = [ 12 ];
-
 var config = {
     options: {
         responsive: true,
@@ -22,10 +19,10 @@ var config = {
     data: {
         backgroundColor: 'white',
         borderColor: 'black',
-        labels: [],
         datasets: [{
             data: [],
-            fill: false,
+            label: 'Pessoas salvas em relação ao tempo',
+            fill: true,
         }]
     }
 };
@@ -34,9 +31,12 @@ var config = {
 window.onload = function(){
     window.chart = new Chart( document.getElementById("chart").getContext("2d"), config);
 };
-
+function clearChart(){
+    config.data.labels = [];
+    config.data.datasets[0].data = [];
+    window.chart.update(config);
+}
 function addPoint( x, y ){
-
     config.data.labels.push( x );
     config.data.datasets[0].data.push( y );
     window.chart.update(config);

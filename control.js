@@ -52,6 +52,7 @@ function startSimulation() {
     alterStatus('Em preparação','green');
     clearSimulation();
     startShip(opacity);
+    clearChart();
 
     // obtain parameters
     spaceData.spaceX = kmToMeters(parseFloat(document.getElementById("espacoBuscaX").value));
